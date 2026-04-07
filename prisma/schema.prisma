@@ -1,0 +1,480 @@
+// ══════════════════════════════════════════════════════════════
+// Eurohive Database Schema
+// PostgreSQL 16 on Scaleway Managed Database (PAR1)
+// ══════════════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Enums ────────────────────────────────────────────────────
+
+enum UserRole {
+  freelancer
+  client
+  admin
+}
+
+enum UserStatus {
+  active
+  suspended
+  banned
+  pending_kyc
+}
+
+enum Availability {
+  available
+  busy
+  unavailable
+}
+
+enum ProjectStatus {
+  draft
+  open
+  in_progress
+  completed
+  cancelled
+}
+
+enum ProjectVisibility {
+  public
+  invite_only
+}
+
+enum BudgetType {
+  fixed
+  hourly
+}
+
+enum ProposalStatus {
+  pending
+  shortlisted
+  accepted
+  declined
+  withdrawn
+}
+
+enum ContractStatus {
+  active
+  completed
+  disputed
+  cancelled
+}
+
+enum MilestoneStatus {
+  pending
+  funded
+  in_progress
+  submitted
+  revision
+  approved
+  disputed
+}
+
+enum MessageType {
+  text
+  file
+  system
+}
+
+enum DisputeStatus {
+  open
+  under_review
+  resolved
+  escalated
+}
+
+enum DisputePriority {
+  low
+  medium
+  high
+}
+
+enum ResolutionType {
+  refund_client
+  release_freelancer
+  split
+  custom
+}
+
+enum GdprRequestType {
+  access
+  erasure
+  rectification
+  portability
+  restriction
+}
+
+enum GdprRequestStatus {
+  pending
+  processing
+  completed
+  denied
+}
+
+enum ConsentType {
+  terms
+  privacy
+  marketing
+  analytics
+  cookies
+}
+
+// ── Core Models ──────────────────────────────────────────────
+
+model User {
+  id               String     @id @default(uuid()) @db.Uuid
+  email            String     @unique @db.VarChar(255)
+  passwordHash     String?    @map("password_hash") @db.VarChar(255)
+  role             UserRole
+  firstName        String     @map("first_name") @db.VarChar(100)
+  lastName         String     @map("last_name") @db.VarChar(100)
+  countryCode      String     @map("country_code") @db.Char(2)
+  avatarUrl        String?    @map("avatar_url")
+  status           UserStatus @default(active)
+  kycVerified      Boolean    @default(false) @map("kyc_verified")
+  kycVerifiedAt    DateTime?  @map("kyc_verified_at")
+  mfaEnabled       Boolean    @default(false) @map("mfa_enabled")
+  mfaSecret        String?    @map("mfa_secret")
+  gdprConsentAt    DateTime   @map("gdpr_consent_at")
+  marketingConsent Boolean    @default(false) @map("marketing_consent")
+  lastLoginAt      DateTime?  @map("last_login_at")
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+  deletedAt        DateTime?  @map("deleted_at")
+
+  // Relations
+  freelancerProfile  FreelancerProfile?
+  projectsAsClient   Project[]         @relation("ClientProjects")
+  proposals          Proposal[]
+  contractsAsClient  Contract[]        @relation("ClientContracts")
+  contractsAsFreelancer Contract[]     @relation("FreelancerContracts")
+  sentMessages       Message[]         @relation("SentMessages")
+  reviewsGiven       Review[]          @relation("ReviewsGiven")
+  reviewsReceived    Review[]          @relation("ReviewsReceived")
+  disputesOpened     Dispute[]         @relation("DisputesOpened")
+  disputesResolved   Dispute[]         @relation("DisputesResolved")
+  gdprRequests       GdprRequest[]     @relation("GdprRequests")
+  gdprProcessed      GdprRequest[]     @relation("GdprProcessed")
+  consentLogs        ConsentLog[]
+  auditLogs          AuditLog[]
+  conversationParts  ConversationParticipant[]
+  accounts           Account[]
+  sessions           Session[]
+
+  @@index([email])
+  @@index([role, status])
+  @@map("users")
+}
+
+model FreelancerProfile {
+  userId            String   @id @map("user_id") @db.Uuid
+  title             String   @db.VarChar(200)
+  bio               String?
+  hourlyRate        Decimal? @map("hourly_rate") @db.Decimal(10, 2)
+  availability      Availability @default(available)
+  skills            String[]
+  languages         String[]
+  portfolioItems    Json     @default("[]") @map("portfolio_items")
+  responseTimeHours Int?     @map("response_time_hours")
+  ratingAvg         Decimal  @default(0) @map("rating_avg") @db.Decimal(3, 2)
+  ratingCount       Int      @default(0) @map("rating_count")
+  completedProjects Int      @default(0) @map("completed_projects")
+  totalEarned       Decimal  @default(0) @map("total_earned") @db.Decimal(12, 2)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([skills], type: Gin)
+  @@map("freelancer_profiles")
+}
+
+model Project {
+  id             String           @id @default(uuid()) @db.Uuid
+  clientId       String           @map("client_id") @db.Uuid
+  title          String           @db.VarChar(300)
+  description    String
+  category       String           @db.VarChar(100)
+  budgetType     BudgetType       @map("budget_type")
+  budgetMin      Decimal          @map("budget_min") @db.Decimal(10, 2)
+  budgetMax      Decimal          @map("budget_max") @db.Decimal(10, 2)
+  skillsRequired String[]         @map("skills_required")
+  deadline       DateTime?        @db.Date
+  status         ProjectStatus    @default(open)
+  visibility     ProjectVisibility @default(public)
+  attachments    Json             @default("[]")
+  proposalCount  Int              @default(0) @map("proposal_count")
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+
+  // Relations
+  client    User       @relation("ClientProjects", fields: [clientId], references: [id])
+  proposals Proposal[]
+  contracts Contract[]
+  conversations Conversation[]
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([clientId])
+  @@map("projects")
+}
+
+model Proposal {
+  id             String         @id @default(uuid()) @db.Uuid
+  projectId      String         @map("project_id") @db.Uuid
+  freelancerId   String         @map("freelancer_id") @db.Uuid
+  coverLetter    String
+  proposedPrice  Decimal        @map("proposed_price") @db.Decimal(10, 2)
+  estimatedDays  Int            @map("estimated_days")
+  status         ProposalStatus @default(pending)
+  portfolioItems Json           @default("[]") @map("portfolio_items")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  // Relations
+  project    Project   @relation(fields: [projectId], references: [id])
+  freelancer User      @relation(fields: [freelancerId], references: [id])
+  contract   Contract?
+
+  @@unique([projectId, freelancerId])
+  @@index([projectId, status])
+  @@map("proposals")
+}
+
+model Contract {
+  id             String         @id @default(uuid()) @db.Uuid
+  projectId      String         @map("project_id") @db.Uuid
+  clientId       String         @map("client_id") @db.Uuid
+  freelancerId   String         @map("freelancer_id") @db.Uuid
+  proposalId     String         @unique @map("proposal_id") @db.Uuid
+  agreedPrice    Decimal        @map("agreed_price") @db.Decimal(10, 2)
+  platformFeePct Decimal        @default(10.00) @map("platform_fee_pct") @db.Decimal(4, 2)
+  status         ContractStatus @default(active)
+  startedAt      DateTime       @default(now()) @map("started_at")
+  completedAt    DateTime?      @map("completed_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  // Relations
+  project    Project     @relation(fields: [projectId], references: [id])
+  client     User        @relation("ClientContracts", fields: [clientId], references: [id])
+  freelancer User        @relation("FreelancerContracts", fields: [freelancerId], references: [id])
+  proposal   Proposal    @relation(fields: [proposalId], references: [id])
+  milestones Milestone[]
+  reviews    Review[]
+  disputes   Dispute[]
+
+  @@index([clientId])
+  @@index([freelancerId])
+  @@map("contracts")
+}
+
+model Milestone {
+  id               String          @id @default(uuid()) @db.Uuid
+  contractId       String          @map("contract_id") @db.Uuid
+  title            String          @db.VarChar(300)
+  description      String?
+  amount           Decimal         @db.Decimal(10, 2)
+  dueDate          DateTime?       @map("due_date") @db.Date
+  position         Int
+  status           MilestoneStatus @default(pending)
+  molliePaymentId  String?         @map("mollie_payment_id") @db.VarChar(50)
+  fundedAt         DateTime?       @map("funded_at")
+  submittedAt      DateTime?       @map("submitted_at")
+  approvedAt       DateTime?       @map("approved_at")
+  payoutTransferId String?         @map("payout_transfer_id") @db.VarChar(50)
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  contract Contract  @relation(fields: [contractId], references: [id])
+  disputes Dispute[]
+
+  @@index([contractId, position])
+  @@map("milestones")
+}
+
+model Conversation {
+  id        String   @id @default(uuid()) @db.Uuid
+  projectId String?  @map("project_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  project      Project?                  @relation(fields: [projectId], references: [id])
+  messages     Message[]
+  participants ConversationParticipant[]
+
+  @@map("conversations")
+}
+
+model ConversationParticipant {
+  id             String   @id @default(uuid()) @db.Uuid
+  conversationId String   @map("conversation_id") @db.Uuid
+  userId         String   @map("user_id") @db.Uuid
+  lastReadAt     DateTime? @map("last_read_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  user         User         @relation(fields: [userId], references: [id])
+
+  @@unique([conversationId, userId])
+  @@map("conversation_participants")
+}
+
+model Message {
+  id             String      @id @default(uuid()) @db.Uuid
+  conversationId String      @map("conversation_id") @db.Uuid
+  senderId       String      @map("sender_id") @db.Uuid
+  content        String?
+  messageType    MessageType @default(text) @map("message_type")
+  fileUrl        String?     @map("file_url")
+  fileName       String?     @map("file_name") @db.VarChar(255)
+  fileSize       Int?        @map("file_size")
+  readAt         DateTime?   @map("read_at")
+  createdAt      DateTime    @default(now()) @map("created_at")
+
+  // Relations
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  sender       User         @relation("SentMessages", fields: [senderId], references: [id])
+
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
+
+model Review {
+  id         String @id @default(uuid()) @db.Uuid
+  contractId String @map("contract_id") @db.Uuid
+  reviewerId String @map("reviewer_id") @db.Uuid
+  revieweeId String @map("reviewee_id") @db.Uuid
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  contract Contract @relation(fields: [contractId], references: [id])
+  reviewer User     @relation("ReviewsGiven", fields: [reviewerId], references: [id])
+  reviewee User     @relation("ReviewsReceived", fields: [revieweeId], references: [id])
+
+  @@unique([contractId, reviewerId])
+  @@map("reviews")
+}
+
+model Dispute {
+  id             String          @id @default(uuid()) @db.Uuid
+  contractId     String          @map("contract_id") @db.Uuid
+  milestoneId    String?         @map("milestone_id") @db.Uuid
+  openedById     String          @map("opened_by") @db.Uuid
+  reason         String          @db.VarChar(100)
+  description    String
+  status         DisputeStatus   @default(open)
+  priority       DisputePriority @default(medium)
+  resolution     String?
+  resolutionType ResolutionType? @map("resolution_type")
+  resolvedById   String?         @map("resolved_by") @db.Uuid
+  resolvedAt     DateTime?       @map("resolved_at")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  contract  Contract   @relation(fields: [contractId], references: [id])
+  milestone Milestone? @relation(fields: [milestoneId], references: [id])
+  openedBy  User       @relation("DisputesOpened", fields: [openedById], references: [id])
+  resolvedBy User?     @relation("DisputesResolved", fields: [resolvedById], references: [id])
+
+  @@map("disputes")
+}
+
+// ── GDPR & Compliance ────────────────────────────────────────
+
+model GdprRequest {
+  id            String            @id @default(uuid()) @db.Uuid
+  userId        String            @map("user_id") @db.Uuid
+  type          GdprRequestType
+  status        GdprRequestStatus @default(pending)
+  requestedAt   DateTime          @default(now()) @map("requested_at")
+  deadlineAt    DateTime          @map("deadline_at") // requestedAt + 30 days
+  completedAt   DateTime?         @map("completed_at")
+  processedById String?           @map("processed_by") @db.Uuid
+  notes         String?
+  exportUrl     String?           @map("export_url")
+  createdAt     DateTime          @default(now()) @map("created_at")
+
+  // Relations
+  user        User  @relation("GdprRequests", fields: [userId], references: [id])
+  processedBy User? @relation("GdprProcessed", fields: [processedById], references: [id])
+
+  @@map("gdpr_requests")
+}
+
+model ConsentLog {
+  id          String      @id @default(uuid()) @db.Uuid
+  userId      String      @map("user_id") @db.Uuid
+  consentType ConsentType @map("consent_type")
+  granted     Boolean
+  ipAddress   String      @map("ip_address")
+  userAgent   String      @map("user_agent")
+  recordedAt  DateTime    @default(now()) @map("recorded_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, consentType])
+  @@map("consent_logs")
+}
+
+model AuditLog {
+  id           String   @id @default(uuid()) @db.Uuid
+  actorId      String?  @map("actor_id") @db.Uuid
+  action       String   @db.VarChar(100)
+  resourceType String   @map("resource_type") @db.VarChar(50)
+  resourceId   String?  @map("resource_id") @db.Uuid
+  metadata     Json?
+  ipAddress    String?  @map("ip_address")
+  recordedAt   DateTime @default(now()) @map("recorded_at")
+
+  // Relations
+  actor User? @relation(fields: [actorId], references: [id])
+
+  @@index([actorId, recordedAt(sort: Desc)])
+  @@index([resourceType, resourceId])
+  @@map("audit_logs")
+}
+
+// ── NextAuth.js Models ───────────────────────────────────────
+
+model Account {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @map("user_id") @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(uuid()) @db.Uuid
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id") @db.Uuid
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}

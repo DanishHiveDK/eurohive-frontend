@@ -1,0 +1,56 @@
+# Eurohive Local Development Environment
+# Run: docker compose up -d
+# Then: npm run dev
+
+services:
+  # ── PostgreSQL 16 ─────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: eurohive-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: eurohive
+      POSTGRES_USER: eurohive
+      POSTGRES_PASSWORD: eurohive_dev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eurohive"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis 7 ───────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: eurohive-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Meilisearch ───────────────────────────────────────────
+  meilisearch:
+    image: getmeili/meilisearch:v1.11
+    container_name: eurohive-search
+    restart: unless-stopped
+    ports:
+      - "7700:7700"
+    environment:
+      MEILI_ENV: development
+      MEILI_MASTER_KEY: eurohive_search_dev_key
+    volumes:
+      - meilisearch_data:/meili_data
+
+volumes:
+  postgres_data:
+  redis_data:
+  meilisearch_data:

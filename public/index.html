@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eurohive — Where Europe's Best Freelancers Meet Great Projects</title>
+  <meta name="description" content="The GDPR-compliant EU freelance marketplace with milestone escrow, local payments, and verified talent from 27 countries.">
+  <meta property="og:title" content="Eurohive — EU Freelance Marketplace">
+  <meta property="og:description" content="Find verified EU freelancers or get hired across 27 countries. Milestone escrow, local payments, GDPR by design.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://eurohive.eu">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── RESET ─────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    /* ── DESIGN TOKENS ─────────────────────────── */
+    :root {
+      --font: 'Inter', 'Proxima Nova', system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── DARK MODE (DEFAULT) ────────────────────── */
+    [data-theme="dark"] {
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.35);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.30);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,0.40);
+      --nav-shadow: none;
+      --bg:           #07101F;
+      --bg-surface:   #0C1A2E;
+      --bg-elevated:  #111F35;
+      --bg-card:      #0E1C31;
+      --nav-bg:       rgba(9, 14, 27, 0.88);
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.16);
+      --text:         #EDF2FF;
+      --text-secondary: #8BA3C7;
+      --text-muted:   #4D6080;
+      --gold:         #E8A838;
+      --gold-dark:    #C88D22;
+      --gold-light:   #F5C96A;
+      --gold-glow:    rgba(232,168,56,0.10);
+      --gold-glow-strong: rgba(232,168,56,0.18);
+      --blue:         #4A90E2;
+      --success:      #22C878;
+      --hex-color:    rgba(232,168,56,0.06);
+    }
+
+    /* ── LIGHT MODE ─────────────────────────────── */
+    [data-theme="light"] {
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.10);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,0.14);
+      --nav-shadow: 0 1px 8px rgba(0,0,0,0.08);
+      --bg:           #F4F7FC;
+      --bg-surface:   #FFFFFF;
+      --bg-elevated:  #FFFFFF;
+      --bg-card:      #FFFFFF;
+      --nav-bg:       rgba(255,255,255,0.90);
+      --border:       #E2EAF4;
+      --border-hover: #B8CCDF;
+      --text:         #0B1628;
+      --text-secondary: #4A6080;
+      --text-muted:   #8FA3B8;
+      --gold:         #C27D10;
+      --gold-dark:    #A3670B;
+      --gold-light:   #E8A838;
+      --gold-glow:    rgba(194,125,16,0.08);
+      --gold-glow-strong: rgba(194,125,16,0.14);
+      --blue:         #2563EB;
+      --success:      #16A34A;
+      --hex-color:    rgba(194,125,16,0.07);
+    }
+
+    /* ── BASE ───────────────────────────────────── */
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+    ::selection { background: var(--gold-glow-strong); color: var(--gold); }
+
+    /* ── HEX PATTERN ────────────────────────────── */
+    .hex-bg {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='50'%3E%3Cpolygon points='28,2 54,15 54,40 28,53 2,40 2,15' fill='none' stroke='%23E8A838' stroke-width='0.7' stroke-opacity='0.12'/%3E%3C/svg%3E");
+      background-size: 56px 50px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 80%);
+      opacity: 0.5;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 2rem; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--nav-shadow, none);
+      transition: var(--transition);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+      flex-shrink: 0;
+    }
+    .nav-logo-mark {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800; color: #07101F;
+      box-shadow: 0 2px 10px var(--gold-glow-strong);
+      flex-shrink: 0;
+    }
+    .nav-logo-text {
+      font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 0.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; padding: 0.45rem 0.85rem; border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); background: var(--border); }
+    .nav-right { display: flex; align-items: center; gap: 0.6rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      font-family: var(--font); font-weight: 600; border: none; cursor: pointer;
+      border-radius: var(--radius-sm); text-decoration: none;
+      transition: var(--transition); white-space: nowrap; line-height: 1;
+    }
+    .btn-sm { font-size: 0.82rem; padding: 0.5rem 1rem; }
+    .btn-md { font-size: 0.9rem; padding: 0.65rem 1.25rem; }
+    .btn-lg { font-size: 1rem; padding: 0.85rem 1.75rem; }
+    .btn-xl { font-size: 1.05rem; padding: 1rem 2rem; }
+
+    .btn-ghost {
+      background: transparent; color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: var(--border-hover); background: var(--border); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #07101F;
+      box-shadow: 0 2px 16px var(--gold-glow-strong);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px var(--gold-glow-strong);
+      filter: brightness(1.06);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: var(--bg-elevated); color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--border-hover); background: var(--bg-card); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+    .btn-outline-gold {
+      background: transparent; color: var(--gold);
+      border: 1.5px solid var(--gold);
+    }
+    .btn-outline-gold:hover { background: var(--gold-glow); transform: translateY(-1px); }
+
+    /* Theme toggle */
+    .theme-toggle {
+      width: 34px; height: 34px; border-radius: var(--radius-sm);
+      background: transparent; border: 1px solid var(--border); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-secondary); font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover { border-color: var(--border-hover); color: var(--text); background: var(--border); }
+
+    /* Mobile menu */
+    .hamburger {
+      display: none; width: 34px; height: 34px; border-radius: var(--radius-sm);
+      background: transparent; border: 1px solid var(--border); cursor: pointer;
+      flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+      transition: var(--transition);
+    }
+    .hamburger span { display: block; width: 16px; height: 1.5px; background: var(--text-secondary); border-radius: 2px; transition: var(--transition); }
+    .hamburger:hover { border-color: var(--border-hover); background: var(--border); }
+    .hamburger:hover span { background: var(--text); }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 8rem 2rem 5rem; position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; width: 700px; height: 700px;
+      background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%, -60%);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: var(--radius-full); padding: 0.4rem 1rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--text-secondary);
+      margin-bottom: 2rem; position: relative; z-index: 1;
+      animation: fadeUp 0.7s ease-out both;
+    }
+    .badge .dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--success);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    .badge .gold-tag {
+      background: var(--gold-glow); color: var(--gold);
+      padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.75); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 800;
+      line-height: 1.08; letter-spacing: -0.035em;
+      color: var(--text); max-width: 820px;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.7s ease-out 0.08s both;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--text-secondary);
+      max-width: 560px; line-height: 1.7; margin-top: 1.5rem; font-weight: 400;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.7s ease-out 0.16s both;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.7s ease-out 0.24s both;
+    }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 4rem; flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.7s ease-out 0.32s both;
+    }
+    .stat { text-align: center; }
+    .stat-val {
+      font-size: 1.75rem; font-weight: 800; color: var(--text);
+      letter-spacing: -0.03em; line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem;
+      font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .stat-divider { width: 1px; background: var(--border); align-self: stretch; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── TRUSTED BY ───────────────────────────────── */
+    .trust-bar {
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-surface);
+    }
+    .trust-bar-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .trust-bar p {
+      font-size: 0.72rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1.5rem;
+    }
+    .trust-logos { display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .trust-logo {
+      font-size: 0.9rem; font-weight: 700; color: var(--text-muted);
+      display: flex; align-items: center; gap: 0.4rem; opacity: 0.55;
+      transition: var(--transition);
+    }
+    .trust-logo:hover { opacity: 0.85; }
+
+    /* ── SECTIONS SHARED ─────────────────────────── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      color: var(--gold); text-transform: uppercase; letter-spacing: 0.14em;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800;
+      color: var(--text); line-height: 1.15; letter-spacing: -0.03em;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text-secondary); line-height: 1.65;
+      max-width: 560px; margin-top: 0.75rem;
+    }
+
+    /* ── HOW IT WORKS ────────────────────────────── */
+    .how-section { background: var(--bg-surface); }
+    .how-header { text-align: center; margin-bottom: 4rem; }
+    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; position: relative; }
+    .how-steps::before {
+      content: ''; position: absolute; top: 28px; left: calc(16.67% + 24px); right: calc(16.67% + 24px);
+      height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .how-step {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem 1.75rem;
+      text-align: center; position: relative;
+      transition: var(--transition);
+    }
+    .how-step:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 800;
+    }
+    .step-num.gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #07101F; }
+    .step-num.outline { background: var(--bg-elevated); color: var(--text); border: 1px solid var(--border); }
+    .how-step h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
+    .how-step p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── BENEFITS ─────────────────────────────────── */
+    .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+    .benefit-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2.5rem;
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .benefit-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+    }
+    .benefit-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .benefit-card:hover::before { transform: scaleX(1); }
+    .benefit-card-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .benefit-card h3 { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+    .benefit-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+    .benefit-list li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .benefit-list li .check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--gold-glow); color: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ── FEATURES GRID ────────────────────────────── */
+    .features-section { background: var(--bg-surface); }
+    .features-header { text-align: center; margin-bottom: 3.5rem; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .feature-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 1.75rem;
+      transition: var(--transition); cursor: default;
+    }
+    .feature-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .feature-icon {
+      width: 42px; height: 42px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; margin-bottom: 1rem;
+      background: var(--gold-glow);
+    }
+    .feature-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .feature-card p { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── STATS BAR ────────────────────────────────── */
+    .stats-section {
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-surface) 100%);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem;
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .stats-item { background: var(--bg-card); padding: 2.5rem 2rem; text-align: center; }
+    .stats-val { font-size: 2.5rem; font-weight: 800; color: var(--text); letter-spacing: -0.04em; }
+    .stats-val span { color: var(--gold); }
+    .stats-lbl { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem; font-weight: 500; }
+
+    /* ── CTA ──────────────────────────────────────── */
+    .cta-section { padding: 6rem 2rem; text-align: center; }
+    .cta-card {
+      max-width: 720px; margin: 0 auto;
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: 24px; padding: 4rem 3rem;
+      position: relative; overflow: hidden;
+    }
+    .cta-card::after {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-glow), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; margin-bottom: 0.75rem;
+      position: relative;
+    }
+    .cta-card p { font-size: 1rem; color: var(--text-secondary); margin-bottom: 2.5rem; position: relative; }
+    .cta-form { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; position: relative; }
+    .input {
+      padding: 0.85rem 1.25rem; border-radius: var(--radius-md);
+      border: 1.5px solid var(--border); background: var(--bg-surface);
+      color: var(--text); font-family: var(--font); font-size: 0.92rem;
+      outline: none; transition: var(--transition);
+    }
+    .input::placeholder { color: var(--text-muted); }
+    .input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+    .input-email { width: 260px; }
+
+    .cta-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 1rem; position: relative; }
+    .cta-success { display: none; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .cta-success.show { display: flex; }
+    .cta-success .check-circle {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(34,200,120,0.12); border: 1px solid rgba(34,200,120,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--success); font-size: 1.3rem;
+    }
+    .cta-success strong { color: var(--text); font-size: 1.05rem; }
+    .cta-success span { color: var(--text-secondary); font-size: 0.875rem; }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      background: var(--bg-surface); border-top: 1px solid var(--border);
+      padding: 3rem 2rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem;
+    }
+    .footer-brand p { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.6; max-width: 260px; }
+    .footer-col h5 { font-size: 0.78rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .footer-col a {
+      display: block; font-size: 0.85rem; color: var(--text-secondary);
+      text-decoration: none; padding: 0.25rem 0; transition: var(--transition);
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      max-width: 1100px; margin: 2rem auto 0;
+      padding-top: 1.5rem; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-badges { display: flex; gap: 1rem; }
+    .footer-badge {
+      font-size: 0.72rem; color: var(--text-muted); font-weight: 500;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+
+    /* ── LANGUAGE SELECTOR ───────────────────────── */
+    .lang-selector { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 6px;
+      height: 34px; padding: 0 10px; border-radius: var(--radius-sm);
+      background: transparent; border: 1px solid var(--border); cursor: pointer;
+      color: var(--text-secondary); font-family: var(--font); font-size: 0.82rem; font-weight: 500;
+      transition: var(--transition); white-space: nowrap;
+    }
+    .lang-btn:hover { border-color: var(--border-hover); color: var(--text); background: var(--border); }
+    .lang-btn .lang-flag { font-size: 1rem; line-height: 1; }
+    .lang-btn .lang-caret { opacity: 0.5; font-size: 0.65rem; }
+    .lang-dropdown {
+      position: absolute; top: calc(100% + 6px); right: 0;
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+      min-width: 200px; max-height: 320px; overflow-y: auto;
+      z-index: 2000; display: none;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .lang-dropdown.open { display: block; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0.55rem 1rem; cursor: pointer;
+      font-size: 0.83rem; color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    .lang-option:hover { background: var(--border); color: var(--text); }
+    .lang-option.active { color: var(--gold); background: var(--gold-glow); }
+    .lang-option .lf { font-size: 1rem; width: 20px; text-align: center; }
+    .lang-option .lc { font-size: 0.72rem; color: var(--text-muted); margin-left: auto; }
+
+    /* ── REVEAL ANIMATIONS ────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .how-steps { grid-template-columns: 1fr; }
+      .how-steps::before { display: none; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero-stats { gap: 1.5rem; }
+      .stat-divider { display: none; }
+      .input-email { width: 100%; }
+      .cta-form { flex-direction: column; align-items: stretch; max-width: 320px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ─────────────────────────────── -->
+  <nav id="nav">
+    <a href="/" class="nav-logo" style="gap:0;">
+      <img src="/favicon.svg?v=2" alt="Eurohive" style="height:36px;width:auto;display:block;" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#how" data-i18n="nav_how">How it works</a></li>
+      <li><a href="#benefits" data-i18n="nav_benefits">Benefits</a></li>
+      <li><a href="#features" data-i18n="nav_features">Features</a></li>
+      <li><a href="#waitlist" data-i18n="nav_pricing">Pricing</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="lang-selector" id="langSelector">
+        <button class="lang-btn" id="langBtn" aria-label="Select language">
+          <span class="lang-flag" id="langFlag">🇬🇧</span>
+          <span id="langCode">EN</span>
+          <span class="lang-caret">▼</span>
+        </button>
+        <div class="lang-dropdown" id="langDropdown"></div>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle dark/light mode">🌙</button>
+      <a href="/platform/#login" class="btn btn-ghost btn-sm" data-i18n="nav_login">Log in</a>
+      <a href="#waitlist" class="btn btn-primary btn-sm" data-i18n="nav_waitlist">Join Waitlist</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ──────────────────────────────────── -->
+  <section class="hero">
+    <div class="hex-bg"></div>
+    <div class="hero-glow"></div>
+
+    <div class="badge">
+      <span class="dot"></span>
+      <span data-i18n="hero_badge">Launching Q3 2026</span>
+      <span class="gold-tag">EU</span>
+    </div>
+
+    <h1><span data-i18n="hero_h1a">Find the right talent.</span><br><span class="highlight" data-i18n="hero_h1b">Faster. Safer.</span></h1>
+
+    <p class="hero-sub" data-i18n="hero_sub">
+      Europe's GDPR-compliant freelance marketplace — milestone escrow, local EU payments, and verified talent across 27 countries.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="/platform/#register" class="btn btn-primary btn-xl">
+        <span data-i18n="cta_find">Find Freelancers</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="/platform/#register" class="btn btn-secondary btn-xl" data-i18n="cta_become">Become a Freelancer</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-val">27</div>
+        <div class="stat-lbl">EU Countries</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-val">10%</div>
+        <div class="stat-lbl">Flat fee</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-val">€0</div>
+        <div class="stat-lbl">To join</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">EU hosted</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRUST BAR ──────────────────────────────── -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <p>Built with trusted European infrastructure</p>
+      <div class="trust-logos">
+        <div class="trust-logo">🔒 Stripe Payments</div>
+        <div class="trust-logo">🇪🇺 GDPR Compliant</div>
+        <div class="trust-logo">🛡️ EU Data Only</div>
+        <div class="trust-logo">✅ Verified Talent</div>
+        <div class="trust-logo">⚡ PSD2 / SCA Ready</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HOW IT WORKS ───────────────────────────── -->
+  <section class="section how-section" id="how">
+    <div class="section-inner">
+      <div class="how-header reveal">
+        <span class="section-label" data-i18n="how_label">How it works</span>
+        <h2 class="section-title" data-i18n="how_title">From brief to delivery in three steps</h2>
+        <p class="section-sub" style="margin: 0.75rem auto 0;">Post your project, review verified proposals, and pay securely through milestone escrow — no surprises.</p>
+      </div>
+
+      <div class="how-steps">
+        <div class="how-step reveal">
+          <div class="step-num gold">1</div>
+          <h3 data-i18n="how_s1_h">Post a project</h3>
+          <p data-i18n="how_s1_p">Describe your scope, budget, and timeline. Our smart matching surfaces the right freelancers instantly.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="step-num outline">2</div>
+          <h3 data-i18n="how_s2_h">Review proposals</h3>
+          <p data-i18n="how_s2_p">Verified freelancers apply with portfolios and competitive quotes. KYC-checked, skill-assessed, EU-based.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="step-num gold">3</div>
+          <h3>Approve & pay</h3>
+          <p data-i18n="how_s3_p">Funds held in escrow until milestones are approved. Release payment instantly. 10% flat fee, always.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BENEFITS ───────────────────────────────── -->
+  <section class="section" id="benefits" style="background: var(--bg);">
+    <div class="section-inner">
+      <div class="reveal" style="text-align:center; margin-bottom: 3rem;">
+        <span class="section-label" data-i18n="benefits_label">Who it's for</span>
+        <h2 class="section-title" data-i18n="benefits_title">Built for both sides of the marketplace</h2>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card reveal">
+          <div class="benefit-card-label" data-i18n="ben_co_label">For Companies</div>
+          <h3 data-i18n="ben_co_h3">Hire with confidence</h3>
+          <ul class="benefit-list">
+            <li><span class="check">✓</span>Access verified EU freelancers with proven portfolios</li>
+            <li><span class="check">✓</span>Milestone escrow protects every payment</li>
+            <li><span class="check">✓</span>Local payment methods — iDEAL, SEPA, Bancontact, Giropay</li>
+            <li><span class="check">✓</span>GDPR-compliant contracts and data handling by default</li>
+            <li><span class="check">✓</span>Smart search by skill, language, country, and availability</li>
+          </ul>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-card-label" data-i18n="ben_fl_label">For Freelancers</div>
+          <h3 data-i18n="ben_fl_h3">Get paid fairly</h3>
+          <ul class="benefit-list">
+            <li><span class="check">✓</span>Escrow guarantees payment before work starts</li>
+            <li><span class="check">✓</span>One flat 10% fee — no hidden charges or subscriptions</li>
+            <li><span class="check">✓</span>Fast payouts to your EU bank account</li>
+            <li><span class="check">✓</span>Build a verified profile that stands out across the EU</li>
+            <li><span class="check">✓</span>Free to join, free to apply — always</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ───────────────────────────────── -->
+  <section class="section features-section" id="features">
+    <div class="section-inner">
+      <div class="features-header reveal">
+        <span class="section-label" data-i18n="features_label">Platform features</span>
+        <h2 class="section-title" data-i18n="features_title">Everything you need, nothing you don't</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🔒</div>
+          <h4 data-i18n="feat1_h">Milestone Escrow</h4>
+          <p data-i18n="feat1_p">Payments locked until work is approved. Both sides protected on every contract.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">🏦</div>
+          <h4 data-i18n="feat2_h">Local EU Payments</h4>
+          <p data-i18n="feat2_p">SEPA, Stripe, card payments — pay the way your country prefers.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">🛡️</div>
+          <h4 data-i18n="feat3_h">GDPR by Design</h4>
+          <p data-i18n="feat3_p">Consent management, data portability, right to erasure. Not an afterthought.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">✅</div>
+          <h4 data-i18n="feat4_h">Verified Talent</h4>
+          <p data-i18n="feat4_p">KYC checks, portfolio reviews, skill assessments. Everyone is who they say.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">⚡</div>
+          <h4 data-i18n="feat5_h">Smart Matching</h4>
+          <p data-i18n="feat5_p">AI-powered search by skills, language, timezone, and availability.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">🇪🇺</div>
+          <h4 data-i18n="feat6_h">EU Infrastructure</h4>
+          <p>Hosted in Paris & Amsterdam on Scaleway. Your data never leaves the EU.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────── -->
+  <div class="stats-section">
+    <div class="section-inner">
+      <div class="stats-grid reveal">
+        <div class="stats-item">
+          <div class="stats-val">27<span>+</span></div>
+          <div class="stats-lbl">EU countries covered</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-val"><span>€</span>0</div>
+          <div class="stats-lbl">Cost to join</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-val">10<span>%</span></div>
+          <div class="stats-lbl">Flat platform fee</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-val">100<span>%</span></div>
+          <div class="stats-lbl">EU-hosted data</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA / WAITLIST ─────────────────────────── -->
+  <section class="cta-section" id="waitlist">
+    <div class="cta-card reveal">
+      <h2 data-i18n="cta_title">Be first in line</h2>
+      <p data-i18n="cta_sub">Join early and get priority access when we launch. Free forever for early adopters.</p>
+
+      <form class="cta-form" id="cta-form" onsubmit="handleWaitlist(event)">
+<input type="email" class="input input-email" name="email" placeholder="your@email.eu" required autocomplete="email">
+        <button type="submit" class="btn btn-primary btn-lg" id="waitlist-btn" data-i18n="waitlist_btn">Join Waitlist</button>
+      </form>
+
+      <div class="cta-success" id="cta-success">
+        <div class="check-circle">✓</div>
+        <strong data-i18n="success_title">You're on the list!</strong>
+        <span data-i18n="success_sub">We'll notify you before launch. Check your inbox for a confirmation.</span>
+      </div>
+
+      <p class="cta-note" data-i18n="cta_note">No spam, ever. Unsubscribe in one click. GDPR-compliant.</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo" style="text-decoration:none;gap:0;">
+          <img src="/favicon.svg?v=2" alt="Eurohive" style="height:28px;width:auto;display:block;" />
+        </a>
+        <p>The GDPR-compliant EU freelance marketplace connecting verified talent with great projects across 27 countries.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Platform</h5>
+        <a href="/platform/">Find Freelancers</a>
+        <a href="/platform/">Become a Freelancer</a>
+        <a href="/platform/">How it works</a>
+        <a href="/platform/">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="mailto:hello@eurohive.eu">Contact</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="#" onclick="openLegal(event,'privacy')">Privacy Policy</a>
+        <a href="#" onclick="openLegal(event,'terms')">Terms of Service</a>
+        <a href="#" onclick="openLegal(event,'cookies')">Cookie Policy</a>
+        <a href="#">GDPR</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eurohive. All rights reserved. Registered in Denmark — CVR 34808090</p>
+      <div class="footer-badges">
+        <span class="footer-badge">🔒 GDPR Compliant</span>
+        <span class="footer-badge">🇪🇺 EU Data Only</span>
+        <span class="footer-badge">🛡️ Encrypted</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── i18n ──────────────────────────────────────
+    const LANGS = [
+      {c:'en',f:'🇬🇧',n:'English'},{c:'da',f:'🇩🇰',n:'Dansk'},{c:'de',f:'🇩🇪',n:'Deutsch'},
+      {c:'fr',f:'🇫🇷',n:'Français'},{c:'es',f:'🇪🇸',n:'Español'},{c:'it',f:'🇮🇹',n:'Italiano'},
+      {c:'nl',f:'🇳🇱',n:'Nederlands'},{c:'sv',f:'🇸🇪',n:'Svenska'},{c:'pl',f:'🇵🇱',n:'Polski'},
+      {c:'pt',f:'🇵🇹',n:'Português'},{c:'no',f:'🇳🇴',n:'Norsk'},{c:'fi',f:'🇫🇮',n:'Suomi'},
+      {c:'cs',f:'🇨🇿',n:'Čeština'},{c:'sk',f:'🇸🇰',n:'Slovenčina'},{c:'hu',f:'🇭🇺',n:'Magyar'},
+      {c:'ro',f:'🇷🇴',n:'Română'},{c:'bg',f:'🇧🇬',n:'Български'},{c:'hr',f:'🇭🇷',n:'Hrvatski'},
+      {c:'el',f:'🇬🇷',n:'Ελληνικά'},{c:'uk',f:'🇺🇦',n:'Українська'},{c:'ru',f:'🇷🇺',n:'Русский'},
+      {c:'lt',f:'🇱🇹',n:'Lietuvių'},{c:'lv',f:'🇱🇻',n:'Latviešu'},{c:'et',f:'🇪🇪',n:'Eesti'},
+      {c:'sl',f:'🇸🇮',n:'Slovenščina'},{c:'sr',f:'🇷🇸',n:'Srpski'},{c:'is',f:'🇮🇸',n:'Íslenska'},
+      {c:'ga',f:'🇮🇪',n:'Gaeilge'},{c:'mt',f:'🇲🇹',n:'Malti'},{c:'lb',f:'🇱🇺',n:'Lëtzebuergesch'}
+    ];
+    const T = {
+      en:{nav_how:'How it works',nav_benefits:'Benefits',nav_features:'Features',nav_pricing:'Pricing',nav_login:'Log in',nav_waitlist:'Join Waitlist',hero_badge:'Launching Q3 2026',hero_h1a:'Find the right talent.',hero_h1b:'Faster. Safer.',hero_sub:"Europe's GDPR-compliant freelance marketplace — milestone escrow, local EU payments, and verified talent across 27 countries.",cta_find:'Find Freelancers',cta_become:'Become a Freelancer',how_label:'How it works',how_title:'From brief to delivery in three steps',benefits_label:"Who it's for",benefits_title:'Built for both sides of the marketplace',features_label:'Platform features',features_title:"Everything you need, nothing you don't",cta_title:'Be first in line',cta_sub:'Join early and get priority access when we launch. Free forever for early adopters.',role_placeholder:'I am a...',role_freelancer:'Freelancer',role_client:'Client / Hiring',waitlist_btn:'Join Waitlist',joining:'Joining...',cta_note:'No spam, ever. Unsubscribe in one click. GDPR-compliant.',success_title:"You're on the list!",success_sub:'We\'ll notify you before launch. Check your inbox for a confirmation.',how_s1_h:"Post a project",how_s1_p:"Describe your scope, budget, and timeline. Our smart matching surfaces the right freelancers instantly.",how_s2_h:"Review proposals",how_s2_p:"Verified freelancers apply with portfolios and competitive quotes. KYC-checked, skill-assessed, EU-based.",how_s3_h:"Approve & pay",how_s3_p:"Funds held in escrow until milestones are approved. Release payment instantly. 10% flat fee, always.",ben_co_label:"For Companies",ben_co_h3:"Hire with confidence",ben_fl_label:"For Freelancers",ben_fl_h3:"Get paid fairly",feat1_h:"Milestone Escrow",feat1_p:"Payments locked until work is approved. Both sides protected on every contract.",feat2_h:"Local EU Payments",feat2_p:"SEPA, Stripe, card payments — pay the way your country prefers.",feat3_h:"GDPR by Design",feat3_p:"Consent management, data portability, right to erasure. Not an afterthought.",feat4_h:"Verified Talent",feat4_p:"KYC checks, portfolio reviews, skill assessments. Everyone is who they say.",feat5_h:"Smart Matching",feat5_p:"AI-powered search by skills, language, timezone, and availability.",feat6_h:"EU Infrastructure",feat6_p:"Hosted in Europe. Your data never leaves the EU."},
+      da:{nav_how:'Sådan virker det',nav_benefits:'Fordele',nav_features:'Funktioner',nav_pricing:'Priser',nav_login:'Log ind',nav_waitlist:'Tilmeld venteliste',hero_badge:'Lancering Q3 2026',hero_h1a:'Find det rette talent.',hero_h1b:'Hurtigere. Sikrere.',hero_sub:'Europas GDPR-kompatible freelancemarked — milepælsdeponering, lokale EU-betalinger og verificeret talent på tværs af 27 lande.',cta_find:'Find freelancere',cta_become:'Bliv freelancer',how_label:'Sådan virker det',how_title:'Fra brief til levering i tre trin',benefits_label:'Hvem det er til',benefits_title:'Bygget til begge sider af markedet',features_label:'Platformfunktioner',features_title:'Alt du behøver, intet du ikke gør',cta_title:'Vær først i køen',cta_sub:'Tilmeld dig tidligt og få prioriteret adgang ved lancering. Gratis for altid for tidlige brugere.',role_placeholder:'Jeg er...',role_freelancer:'Freelancer',role_client:'Virksomhed / Ansætter',waitlist_btn:'Tilmeld venteliste',joining:'Tilmelder...',cta_note:'Ingen spam nogensinde. Afmeld med ét klik. GDPR-kompatibel.',success_title:'Du er på listen!',success_sub:'Vi giver dig besked før lancering. Tjek din indbakke for bekræftelse.',how_s1_h:"Opret et projekt",how_s1_p:"Beskriv dit scope, budget og tidsplan. Vores smart-matching finder de rigtige freelancere øjeblikkeligt.",how_s2_h:"Gennemgå ansøgninger",how_s2_p:"Verificerede freelancere ansøger med porteføljer og konkurrencedygtige tilbud. KYC-kontrollerede, EU-baserede.",how_s3_h:"Godkend og betal",how_s3_p:"Beløb holdes i escrow, indtil milestones er godkendt. Frigiv betaling øjeblikkeligt. 10% fast gebyr, altid.",ben_co_label:"For virksomheder",ben_co_h3:"Ansæt med tillid",ben_fl_label:"For freelancere",ben_fl_h3:"Bliv betalt retfærdigt",feat1_h:"Milestone Escrow",feat1_p:"Betalinger låst, indtil arbejdet er godkendt. Begge parter beskyttet på hver kontrakt.",feat2_h:"Lokale EU-betalinger",feat2_p:"SEPA, Stripe, kortbetalinger — betal som dit land foretrækker.",feat3_h:"GDPR som standard",feat3_p:"Samtykke, dataportabilitet, ret til sletning. Ikke en eftertanke.",feat4_h:"Verificeret talent",feat4_p:"KYC-kontroller, porteføljegennemgange, kompetencevurderinger. Alle er, hvem de udgiver sig for.",feat5_h:"Smart matching",feat5_p:"AI-drevet søgning efter kompetencer, sprog, tidszone og tilgængelighed.",feat6_h:"EU-infrastruktur",feat6_p:"Hostet i Europa. Dine data forlader aldrig EU."},
+      de:{nav_how:'So funktioniert es',nav_benefits:'Vorteile',nav_features:'Funktionen',nav_pricing:'Preise',nav_login:'Anmelden',nav_waitlist:'Warteliste beitreten',hero_badge:'Start Q3 2026',hero_h1a:'Finden Sie das richtige Talent.',hero_h1b:'Schneller. Sicherer.',hero_sub:'Europas DSGVO-konformer Freelance-Marktplatz — Meilenstein-Treuhand, lokale EU-Zahlungen und geprüfte Talente aus 27 Ländern.',cta_find:'Freelancer finden',cta_become:'Freelancer werden',how_label:'So funktioniert es',how_title:'Vom Brief zur Lieferung in drei Schritten',benefits_label:'Für wen',benefits_title:'Für beide Seiten des Marktplatzes',features_label:'Plattformfunktionen',features_title:'Alles was Sie brauchen, nichts was Sie nicht brauchen',cta_title:'Seien Sie Erster',cta_sub:'Melden Sie sich früh an und erhalten Sie Prioritätszugang beim Start. Für immer kostenlos für Frühanwender.',role_placeholder:'Ich bin...',role_freelancer:'Freelancer',role_client:'Unternehmen / Auftraggeber',waitlist_btn:'Warteliste beitreten',joining:'Wird eingetragen...',cta_note:'Kein Spam. Abmeldung per Klick. DSGVO-konform.',success_title:'Sie sind auf der Liste!',success_sub:'Wir benachrichtigen Sie vor dem Start. Prüfen Sie Ihren Posteingang.',how_s1_h:"Projekt erstellen",how_s1_p:"Beschreiben Sie Umfang, Budget und Zeitplan. Unser Smart-Matching findet sofort die richtigen Freelancer.",how_s2_h:"Angebote prüfen",how_s2_p:"Verifizierte Freelancer bewerben sich mit Portfolios und wettbewerbsfähigen Angeboten. KYC-geprüft, EU-ansässig.",how_s3_h:"Genehmigen & bezahlen",how_s3_p:"Gelder werden in Escrow gehalten, bis Meilensteine genehmigt sind. Sofortige Zahlung. 10% Pauschalgebühr, immer.",ben_co_label:"Für Unternehmen",ben_co_h3:"Mit Vertrauen einstellen",ben_fl_label:"Für Freelancer",ben_fl_h3:"Fair bezahlt werden",feat1_h:"Meilenstein-Escrow",feat1_p:"Zahlungen gesperrt bis zur Genehmigung. Beide Seiten bei jedem Auftrag geschützt.",feat2_h:"Lokale EU-Zahlungen",feat2_p:"SEPA, Stripe, Kartenzahlung — zahlen Sie, wie Ihr Land es bevorzugt.",feat3_h:"DSGVO by Design",feat3_p:"Einwilligungsverwaltung, Datenportabilität, Recht auf Löschung. Kein Nachgedanke.",feat4_h:"Verifiziertes Talent",feat4_p:"KYC-Prüfungen, Portfolio-Bewertungen, Kompetenztests. Jeder ist, wer er vorgibt zu sein.",feat5_h:"Intelligentes Matching",feat5_p:"KI-gestützte Suche nach Fähigkeiten, Sprache, Zeitzone und Verfügbarkeit.",feat6_h:"EU-Infrastruktur",feat6_p:"In Europa gehostet. Ihre Daten verlassen nie die EU."},
+      fr:{nav_how:'Comment ça marche',nav_benefits:'Avantages',nav_features:'Fonctionnalités',nav_pricing:'Tarifs',nav_login:'Se connecter',nav_waitlist:"Rejoindre la liste d'attente",hero_badge:'Lancement T3 2026',hero_h1a:'Trouvez le bon talent.',hero_h1b:'Plus vite. Plus sûrement.',hero_sub:'La marketplace freelance RGPD-conforme d\'Europe — entiercement par étapes, paiements EU locaux et talents vérifiés dans 27 pays.',cta_find:'Trouver des freelances',cta_become:'Devenir freelance',how_label:'Comment ça marche',how_title:'Du brief à la livraison en trois étapes',benefits_label:'Pour qui',benefits_title:'Conçu pour les deux côtés du marché',features_label:'Fonctionnalités',features_title:"Tout ce dont vous avez besoin, rien de superflu",cta_title:'Soyez le premier',cta_sub:"Inscrivez-vous tôt et obtenez un accès prioritaire au lancement. Gratuit pour toujours pour les premiers utilisateurs.",role_placeholder:'Je suis...',role_freelancer:'Freelance',role_client:'Entreprise / Recruteur',waitlist_btn:"Rejoindre la liste d'attente",joining:'Inscription...',cta_note:'Pas de spam. Désinscription en un clic. Conforme RGPD.',success_title:'Vous êtes sur la liste !',success_sub:'Nous vous notifierons avant le lancement. Vérifiez votre boîte de réception.',how_s1_h:"Publier un projet",how_s1_p:"Décrivez votre périmètre, budget et calendrier. Notre matching intelligent trouve les bons freelances instantanément.",how_s2_h:"Examiner les propositions",how_s2_p:"Des freelances vérifiés postulent avec portfolios et devis compétitifs. Contrôle KYC, basés dans l'UE.",how_s3_h:"Approuver & payer",how_s3_p:"Fonds bloqués jusqu'à validation des jalons. Paiement instantané. 10% de commission fixe, toujours.",ben_co_label:"Pour les entreprises",ben_co_h3:"Recruter en confiance",ben_fl_label:"Pour les freelances",ben_fl_h3:"Être payé équitablement",feat1_h:"Séquestre par étape",feat1_p:"Paiements bloqués jusqu'à approbation. Les deux parties protégées sur chaque contrat.",feat2_h:"Paiements EU locaux",feat2_p:"SEPA, Stripe, carte bancaire — payez comme votre pays le préfère.",feat3_h:"RGPD par conception",feat3_p:"Gestion des consentements, portabilité, droit à l'effacement. Pas une réflexion après coup.",feat4_h:"Talent vérifié",feat4_p:"Contrôles KYC, revues de portfolio, évaluations. Chacun est bien qui il prétend être.",feat5_h:"Matching intelligent",feat5_p:"Recherche IA par compétences, langue, fuseau horaire et disponibilité.",feat6_h:"Infrastructure EU",feat6_p:"Hébergé en Europe. Vos données ne quittent jamais l'UE."},
+      es:{nav_how:'Cómo funciona',nav_benefits:'Ventajas',nav_features:'Características',nav_pricing:'Precios',nav_login:'Iniciar sesión',nav_waitlist:'Unirse a la lista',hero_badge:'Lanzamiento T3 2026',hero_h1a:'Encuentra el talento adecuado.',hero_h1b:'Más rápido. Más seguro.',hero_sub:'El mercado freelance europeo conforme con el RGPD — escrow por hitos, pagos locales en la UE y talento verificado en 27 países.',cta_find:'Buscar freelancers',cta_become:'Ser freelancer',how_label:'Cómo funciona',how_title:'Del brief a la entrega en tres pasos',benefits_label:'Para quién',benefits_title:'Diseñado para ambos lados del mercado',features_label:'Características',features_title:'Todo lo que necesitas, nada más',cta_title:'Sé el primero',cta_sub:'Regístrate antes y obtén acceso prioritario en el lanzamiento. Siempre gratis para los primeros usuarios.',role_placeholder:'Soy...',role_freelancer:'Freelancer',role_client:'Empresa / Contratante',waitlist_btn:'Unirse a la lista',joining:'Registrando...',cta_note:'Sin spam. Cancela con un clic. Conforme con el RGPD.',success_title:'¡Estás en la lista!',success_sub:'Te notificaremos antes del lanzamiento. Revisa tu bandeja de entrada.',how_s1_h:"Publicar un proyecto",how_s1_p:"Describe tu alcance, presupuesto y plazos. Nuestro sistema inteligente encuentra a los freelancers adecuados al instante.",how_s2_h:"Revisar propuestas",how_s2_p:"Freelancers verificados se postulan con portafolios y cotizaciones competitivas. KYC verificados, basados en la UE.",how_s3_h:"Aprobar y pagar",how_s3_p:"Fondos retenidos en escrow hasta que los hitos sean aprobados. Pago instantáneo. 10% de comisión fija, siempre.",ben_co_label:"Para empresas",ben_co_h3:"Contrata con confianza",ben_fl_label:"Para freelancers",ben_fl_h3:"Recibe un pago justo",feat1_h:"Escrow por hitos",feat1_p:"Pagos bloqueados hasta aprobación del trabajo. Ambas partes protegidas en cada contrato.",feat2_h:"Pagos locales EU",feat2_p:"SEPA, Stripe, tarjeta — paga como prefiere tu país.",feat3_h:"RGPD por diseño",feat3_p:"Gestión de consentimientos, portabilidad de datos, derecho al olvido.",feat4_h:"Talento verificado",feat4_p:"Verificaciones KYC, revisiones de portafolio, evaluaciones. Todos son quienes dicen ser.",feat5_h:"Matching inteligente",feat5_p:"Búsqueda con IA por habilidades, idioma, zona horaria y disponibilidad.",feat6_h:"Infraestructura EU",feat6_p:"Alojado en Europa. Tus datos nunca salen de la UE."},
+      it:{nav_how:'Come funziona',nav_benefits:'Vantaggi',nav_features:'Funzionalità',nav_pricing:'Prezzi',nav_login:'Accedi',nav_waitlist:'Unisciti alla lista',hero_badge:'Lancio T3 2026',hero_h1a:'Trova il talento giusto.',hero_h1b:'Più veloce. Più sicuro.',hero_sub:'Il marketplace freelance europeo conforme al GDPR — escrow a tappe, pagamenti UE locali e talenti verificati in 27 paesi.',cta_find:'Trova freelancer',cta_become:'Diventa freelancer',how_label:'Come funziona',how_title:'Dal brief alla consegna in tre passi',benefits_label:'Per chi',benefits_title:'Costruito per entrambi i lati del mercato',features_label:'Funzionalità',features_title:'Tutto ciò che ti serve, niente di superfluo',cta_title:'Sii il primo',cta_sub:"Iscriviti prima e ottieni accesso prioritario al lancio. Gratis per sempre per i primi utenti.",role_placeholder:'Sono...',role_freelancer:'Freelancer',role_client:'Azienda / Datore',waitlist_btn:'Unisciti alla lista',joining:'Iscrizione...',cta_note:'Niente spam. Cancella con un clic. Conforme al GDPR.',success_title:'Sei nella lista!',success_sub:'Ti notificheremo prima del lancio. Controlla la tua casella di posta.',how_s1_h:"Pubblica un progetto",how_s1_p:"Descrivi il tuo ambito, budget e tempistiche. Il nostro smart matching trova i freelancer giusti istantaneamente.",how_s2_h:"Esamina le proposte",how_s2_p:"I freelancer verificati si candidano con portfolio e preventivi competitivi. Controllo KYC, basati in UE.",how_s3_h:"Approva e paga",how_s3_p:"I fondi sono trattenuti in escrow fino all'approvazione delle milestone. Pagamento immediato. 10% di commissione fissa, sempre.",ben_co_label:"Per le aziende",ben_co_h3:"Assumi con fiducia",ben_fl_label:"Per i freelancer",ben_fl_h3:"Ricevi un compenso giusto",feat1_h:"Escrow per milestone",feat1_p:"Pagamenti bloccati fino all'approvazione del lavoro. Entrambe le parti protette in ogni contratto.",feat2_h:"Pagamenti locali EU",feat2_p:"SEPA, Stripe, carta di credito — paga come preferisce il tuo paese.",feat3_h:"GDPR by Design",feat3_p:"Gestione del consenso, portabilità dei dati, diritto all'oblio. Non un ripensamento.",feat4_h:"Talento verificato",feat4_p:"Controlli KYC, revisioni del portfolio, valutazioni delle competenze.",feat5_h:"Matching intelligente",feat5_p:"Ricerca basata sull'IA per competenze, lingua, fuso orario e disponibilità.",feat6_h:"Infrastruttura EU",feat6_p:"Ospitato in Europa. I tuoi dati non lasciano mai l'UE."},
+      nl:{nav_how:'Hoe het werkt',nav_benefits:'Voordelen',nav_features:'Functies',nav_pricing:'Prijzen',nav_login:'Inloggen',nav_waitlist:'Wachtlijst',hero_badge:'Lancering Q3 2026',hero_h1a:'Vind het juiste talent.',hero_h1b:'Sneller. Veiliger.',hero_sub:'Europas AVG-conforme freelancemarkt — mijlpaal-escrow, lokale EU-betalingen en geverifieerd talent in 27 landen.',cta_find:'Freelancers vinden',cta_become:'Freelancer worden',how_label:'Hoe het werkt',how_title:'Van briefing tot levering in drie stappen',benefits_label:'Voor wie',benefits_title:'Gebouwd voor beide kanten van de markt',features_label:'Platformfuncties',features_title:'Alles wat je nodig hebt, niets meer',cta_title:'Wees de eerste',cta_sub:'Meld je vroeg aan en krijg prioriteitstoegang bij de lancering. Altijd gratis voor vroege gebruikers.',role_placeholder:'Ik ben...',role_freelancer:'Freelancer',role_client:'Bedrijf / Opdrachtgever',waitlist_btn:'Wachtlijst',joining:'Aanmelden...',cta_note:'Geen spam. Afmelden met één klik. AVG-conform.',success_title:'Je staat op de lijst!',success_sub:'We sturen je een bericht voor de lancering. Controleer je inbox.',how_s1_h:"Project plaatsen",how_s1_p:"Beschrijf uw scope, budget en tijdlijn. Onze slimme matching vindt direct de juiste freelancers.",how_s2_h:"Voorstellen beoordelen",how_s2_p:"Geverifieerde freelancers solliciteren met portfolio's en concurrerende offertes. KYC-gecontroleerd, EU-gebaseerd.",how_s3_h:"Goedkeuren & betalen",how_s3_p:"Geld in escrow totdat mijlpalen zijn goedgekeurd. Directe betaling. 10% vaste vergoeding, altijd.",ben_co_label:"Voor bedrijven",ben_co_h3:"Huur met vertrouwen",ben_fl_label:"Voor freelancers",ben_fl_h3:"Eerlijk betaald worden",feat1_h:"Mijlpaal Escrow",feat1_p:"Betalingen geblokkeerd totdat werk is goedgekeurd. Beide partijen beschermd op elk contract.",feat2_h:"Lokale EU-betalingen",feat2_p:"SEPA, Stripe, kaartbetalingen — betaal zoals uw land dat prefereert.",feat3_h:"AVG by Design",feat3_p:"Toestemmingsbeheer, gegevensoverdraagbaarheid, recht op verwijdering.",feat4_h:"Geverifieerd talent",feat4_p:"KYC-controles, portfoliobeoordelingen, vaardigheidsbeoordelingen.",feat5_h:"Slim matching",feat5_p:"AI-gestuurde zoekopdracht op vaardigheden, taal, tijdzone en beschikbaarheid.",feat6_h:"EU-infrastructuur",feat6_p:"Gehost in Europa. Uw gegevens verlaten nooit de EU."},
+      sv:{nav_how:'Hur det fungerar',nav_benefits:'Fördelar',nav_features:'Funktioner',nav_pricing:'Priser',nav_login:'Logga in',nav_waitlist:'Gå med i väntelistan',hero_badge:'Lansering Q3 2026',hero_h1a:'Hitta rätt talang.',hero_h1b:'Snabbare. Säkrare.',hero_sub:'Europas GDPR-kompatibla frilansmarknad — milstolpeescrow, lokala EU-betalningar och verifierade talanger i 27 länder.',cta_find:'Hitta frilansare',cta_become:'Bli frilansare',how_label:'Hur det fungerar',how_title:'Från brief till leverans i tre steg',benefits_label:'Vem det är för',benefits_title:'Byggt för båda sidor av marknaden',features_label:'Plattformsfunktioner',features_title:'Allt du behöver, inget du inte gör',cta_title:'Var först i kön',cta_sub:'Registrera dig tidigt och få prioriterad åtkomst vid lansering. Alltid gratis för tidiga användare.',role_placeholder:'Jag är...',role_freelancer:'Frilansare',role_client:'Företag / Uppdragsgivare',waitlist_btn:'Gå med i väntelistan',joining:'Registrerar...',cta_note:'Ingen spam. Avregistrera med ett klick. GDPR-kompatibel.',success_title:'Du är på listan!',success_sub:'Vi meddelar dig innan lansering. Kolla din inkorg.',how_s1_h:"Posta ett projekt",how_s1_p:"Beskriv ditt uppdrag, budget och tidslinje. Vår smarta matchning hittar rätt frilansare omedelbart.",how_s2_h:"Granska förslag",how_s2_p:"Verifierade frilansare ansöker med portföljer och konkurrenskraftiga offerter. KYC-kontrollerade, EU-baserade.",how_s3_h:"Godkänn och betala",how_s3_p:"Pengar hålls i escrow tills milstolpar godkänts. Omedelbar betalning. 10% fast avgift, alltid.",ben_co_label:"För företag",ben_co_h3:"Anlita med förtroende",ben_fl_label:"För frilansare",ben_fl_h3:"Bli rättvist betald",feat1_h:"Milstolpe Escrow",feat1_p:"Betalningar låsta tills arbetet godkänts. Båda parter skyddade i varje kontrakt.",feat2_h:"Lokala EU-betalningar",feat2_p:"SEPA, Stripe, kortbetalningar — betala som ditt land föredrar.",feat3_h:"GDPR som standard",feat3_p:"Samtyckehantering, dataportabilitet, rätt att bli glömd.",feat4_h:"Verifierat talent",feat4_p:"KYC-kontroller, portföljgranskningar, kompetensbedömningar.",feat5_h:"Smart matchning",feat5_p:"AI-driven sökning efter kompetenser, språk, tidszon och tillgänglighet.",feat6_h:"EU-infrastruktur",feat6_p:"Hostat i Europa. Dina data lämnar aldrig EU."},
+      pl:{nav_how:'Jak to działa',nav_benefits:'Korzyści',nav_features:'Funkcje',nav_pricing:'Cennik',nav_login:'Zaloguj się',nav_waitlist:'Dołącz do listy',hero_badge:'Premiera Q3 2026',hero_h1a:'Znajdź właściwy talent.',hero_h1b:'Szybciej. Bezpieczniej.',hero_sub:'Europejski rynek freelancerów zgodny z RODO — escrow kamień milowy, lokalne płatności UE i zweryfikowane talenty w 27 krajach.',cta_find:'Znajdź freelancerów',cta_become:'Zostań freelancerem',how_label:'Jak to działa',how_title:'Od briefu do dostawy w trzech krokach',benefits_label:'Dla kogo',benefits_title:'Zbudowany dla obu stron rynku',features_label:'Funkcje platformy',features_title:'Wszystko czego potrzebujesz, nic zbędnego',cta_title:'Bądź pierwszy',cta_sub:'Zarejestruj się wcześnie i uzyskaj priorytetowy dostęp przy starcie. Zawsze bezpłatny dla wczesnych użytkowników.',role_placeholder:'Jestem...',role_freelancer:'Freelancer',role_client:'Firma / Zleceniodawca',waitlist_btn:'Dołącz do listy',joining:'Dołączanie...',cta_note:'Bez spamu. Wypisz się jednym kliknięciem. Zgodny z RODO.',success_title:'Jesteś na liście!',success_sub:'Powiadomimy Cię przed uruchomieniem. Sprawdź swoją skrzynkę.'},
+      pt:{nav_how:'Como funciona',nav_benefits:'Benefícios',nav_features:'Funcionalidades',nav_pricing:'Preços',nav_login:'Entrar',nav_waitlist:'Entrar na lista',hero_badge:'Lançamento T3 2026',hero_h1a:'Encontre o talento certo.',hero_h1b:'Mais rápido. Mais seguro.',hero_sub:'O mercado freelance europeu conforme ao RGPD — escrow por marcos, pagamentos locais UE e talentos verificados em 27 países.',cta_find:'Encontrar freelancers',cta_become:'Tornar-se freelancer',how_label:'Como funciona',how_title:'Do briefing à entrega em três etapas',benefits_label:'Para quem',benefits_title:'Construído para ambos os lados do mercado',features_label:'Funcionalidades',features_title:'Tudo o que precisa, nada mais',cta_title:'Seja o primeiro',cta_sub:'Registe-se cedo e obtenha acesso prioritário no lançamento. Sempre grátis para os primeiros utilizadores.',role_placeholder:'Sou...',role_freelancer:'Freelancer',role_client:'Empresa / Contratante',waitlist_btn:'Entrar na lista',joining:'A registar...',cta_note:'Sem spam. Cancele com um clique. Conforme ao RGPD.',success_title:'Está na lista!',success_sub:'Notificaremos antes do lançamento. Verifique a sua caixa de entrada.'},
+      no:{nav_how:'Hvordan det fungerer',nav_benefits:'Fordeler',nav_features:'Funksjoner',nav_pricing:'Priser',nav_login:'Logg inn',nav_waitlist:'Bli med på ventelisten',hero_badge:'Lansering Q3 2026',hero_h1a:'Finn riktig talent.',hero_h1b:'Raskere. Tryggere.',hero_sub:'Europas GDPR-kompatible frilansmarked — milepæl-escrow, lokale EU-betalinger og verifiserte talenter i 27 land.',cta_find:'Finn frilansere',cta_become:'Bli frilans',how_label:'Hvordan det fungerer',how_title:'Fra brief til levering i tre steg',benefits_label:'For hvem',benefits_title:'Bygget for begge sider av markedet',features_label:'Plattformfunksjoner',features_title:'Alt du trenger, intet du ikke gjør',cta_title:'Vær først i køen',cta_sub:'Registrer deg tidlig og få prioritert tilgang ved lansering. Alltid gratis for tidlige brukere.',role_placeholder:'Jeg er...',role_freelancer:'Frilans',role_client:'Bedrift / Oppdragsgiver',waitlist_btn:'Bli med på ventelisten',joining:'Registrerer...',cta_note:'Ingen spam. Avslutt med ett klikk. GDPR-kompatibel.',success_title:'Du er på listen!',success_sub:'Vi varsler deg før lansering. Sjekk innboksen din.'},
+      fi:{nav_how:'Miten se toimii',nav_benefits:'Edut',nav_features:'Ominaisuudet',nav_pricing:'Hinnoittelu',nav_login:'Kirjaudu',nav_waitlist:'Liity jonotuslistalle',hero_badge:'Julkaisu Q3 2026',hero_h1a:'Löydä oikea lahjakkuus.',hero_h1b:'Nopeammin. Turvallisemmin.',hero_sub:'Euroopan GDPR-yhteensopiva freelance-markkinapaikka — välitavoite-escrow, paikalliset EU-maksut ja tarkistetut lahjakkuudet 27 maassa.',cta_find:'Etsi freelancereita',cta_become:'Ryhdy freelanceriksi',how_label:'Miten se toimii',how_title:'Briefistä toimitukseen kolmessa vaiheessa',benefits_label:'Kenelle',benefits_title:'Rakennettu markkinapaikan molemmille puolille',features_label:'Alustan ominaisuudet',features_title:'Kaikki mitä tarvitset, ei mitään ylimääräistä',cta_title:'Ole ensimmäinen',cta_sub:'Rekisteröidy aikaisin ja saa prioriteettipääsy julkaisun yhteydessä. Ilmainen aina aikaisille käyttäjille.',role_placeholder:'Olen...',role_freelancer:'Freelancer',role_client:'Yritys / Työnantaja',waitlist_btn:'Liity jonotuslistalle',joining:'Liitytään...',cta_note:'Ei roskapostia. Peru yhdellä klikillä. GDPR-yhteensopiva.',success_title:'Olet listalla!',success_sub:'Ilmoitamme sinulle ennen julkaisua. Tarkista postilaatikkosi.'},
+      cs:{nav_how:'Jak to funguje',nav_benefits:'Výhody',nav_features:'Funkce',nav_pricing:'Ceny',nav_login:'Přihlásit se',nav_waitlist:'Přidat se na seznam',hero_badge:'Spuštění Q3 2026',hero_h1a:'Najděte správný talent.',hero_h1b:'Rychleji. Bezpečněji.',hero_sub:'Evropský freelance marketplace v souladu s GDPR — milníkový escrow, místní platby EU a ověřené talenty v 27 zemích.',cta_find:'Najít freelancery',cta_become:'Stát se freelancerem',how_label:'Jak to funguje',how_title:'Od zadání po doručení ve třech krocích',benefits_label:'Pro koho',benefits_title:'Postaveno pro obě strany trhu',features_label:'Funkce platformy',features_title:'Vše co potřebujete, nic navíc',cta_title:'Buďte první',cta_sub:'Zaregistrujte se brzy a získejte prioritní přístup při spuštění. Navždy zdarma pro první uživatele.',role_placeholder:'Jsem...',role_freelancer:'Freelancer',role_client:'Firma / Zadavatel',waitlist_btn:'Přidat se na seznam',joining:'Přidávám...',cta_note:'Žádný spam. Odhlásit jedním klikem. V souladu s GDPR.',success_title:'Jste na seznamu!',success_sub:'Upozorníme vás před spuštěním. Zkontrolujte svou doručenou poštu.'},
+      sk:{nav_how:'Ako to funguje',nav_benefits:'Výhody',nav_features:'Funkcie',nav_pricing:'Ceny',nav_login:'Prihlásiť sa',nav_waitlist:'Pridať sa na zoznam',hero_badge:'Spustenie Q3 2026',hero_h1a:'Nájdite správny talent.',hero_h1b:'Rýchlejšie. Bezpečnejšie.',hero_sub:'Európsky freelance marketplace v súlade s GDPR — míľnikový escrow, miestne platby EÚ a overené talenty v 27 krajinách.',cta_find:'Nájsť freelancerov',cta_become:'Stať sa freelancerom',how_label:'Ako to funguje',how_title:'Od zadania po doručenie v troch krokoch',benefits_label:'Pre koho',benefits_title:'Postavené pre obe strany trhu',features_label:'Funkcie platformy',features_title:'Všetko čo potrebujete, nič navyše',cta_title:'Buďte prví',cta_sub:'Zaregistrujte sa skoro a získajte prioritný prístup pri spustení. Navždy zadarmo pre prvých používateľov.',role_placeholder:'Som...',role_freelancer:'Freelancer',role_client:'Firma / Zadávateľ',waitlist_btn:'Pridať sa na zoznam',joining:'Pridávam...',cta_note:'Žiadny spam. Odhlásiť jedným kliknutím. V súlade s GDPR.',success_title:'Ste na zozname!',success_sub:'Upozorníme vás pred spustením. Skontrolujte svoju doručenú poštu.'},
+      hu:{nav_how:'Hogyan működik',nav_benefits:'Előnyök',nav_features:'Funkciók',nav_pricing:'Árak',nav_login:'Bejelentkezés',nav_waitlist:'Csatlakozás a várólistához',hero_badge:'Indítás Q3 2026',hero_h1a:'Találja meg a megfelelő tehetséget.',hero_h1b:'Gyorsabban. Biztonságosabban.',hero_sub:'Európa GDPR-megfelelő szabadúszó piactere — mérföldkő-letét, helyi EU-fizetések és ellenőrzött tehetségek 27 országban.',cta_find:'Szabadúszók keresése',cta_become:'Legyen szabadúszó',how_label:'Hogyan működik',how_title:'A megbízástól a szállításig három lépésben',benefits_label:'Kinek szól',benefits_title:'A piactér mindkét oldalára építve',features_label:'Platform funkciók',features_title:'Minden amire szüksége van, semmi felesleges',cta_title:'Legyen az első',cta_sub:'Regisztráljon korán és kapjon elsőbbségi hozzáférést az induláskor. Mindig ingyenes a korai felhasználóknak.',role_placeholder:'Én vagyok...',role_freelancer:'Szabadúszó',role_client:'Vállalat / Megbízó',waitlist_btn:'Csatlakozás a várólistához',joining:'Csatlakozás...',cta_note:'Nincs spam. Egy kattintással leiratkozhat. GDPR-megfelelő.',success_title:'Felkerült a listára!',success_sub:'Értesítjük az indítás előtt. Ellenőrizze a beérkező leveleit.'},
+      ro:{nav_how:'Cum funcționează',nav_benefits:'Beneficii',nav_features:'Funcționalități',nav_pricing:'Prețuri',nav_login:'Conectare',nav_waitlist:'Alătură-te listei',hero_badge:'Lansare T3 2026',hero_h1a:'Găsește talentul potrivit.',hero_h1b:'Mai rapid. Mai sigur.',hero_sub:'Piața freelance europeană conformă GDPR — escrow pe jaloane, plăți locale UE și talente verificate în 27 de țări.',cta_find:'Găsește freelanceri',cta_become:'Devino freelancer',how_label:'Cum funcționează',how_title:'De la brief la livrare în trei pași',benefits_label:'Pentru cine',benefits_title:'Construit pentru ambele părți ale pieței',features_label:'Funcționalitățile platformei',features_title:'Tot ce ai nevoie, nimic în plus',cta_title:'Fii primul',cta_sub:'Înregistrează-te devreme și obține acces prioritar la lansare. Gratuit pentru totdeauna pentru primii utilizatori.',role_placeholder:'Sunt...',role_freelancer:'Freelancer',role_client:'Companie / Angajator',waitlist_btn:'Alătură-te listei',joining:'Se înregistrează...',cta_note:'Fără spam. Dezabonare cu un clic. Conform GDPR.',success_title:'Ești pe listă!',success_sub:'Te vom notifica înainte de lansare. Verifică-ți căsuța poștală.'},
+      bg:{nav_how:'Как работи',nav_benefits:'Предимства',nav_features:'Функции',nav_pricing:'Цени',nav_login:'Вход',nav_waitlist:'Присъединете се към списъка',hero_badge:'Стартиране Q3 2026',hero_h1a:'Намерете правилния талант.',hero_h1b:'По-бързо. По-сигурно.',hero_sub:'Европейският GDPR-съвместим фрийланс пазар — ескроу на етапи, местни EU плащания и верифицирани таланти в 27 страни.',cta_find:'Намерете фрийлансъри',cta_become:'Станете фрийлансър',how_label:'Как работи',how_title:'От задание до доставка в три стъпки',benefits_label:'За кого',benefits_title:'Изграден за двете страни на пазара',features_label:'Функции на платформата',features_title:'Всичко необходимо, нищо излишно',cta_title:'Бъдете първи',cta_sub:'Регистрирайте се рано и получете приоритетен достъп при стартиране. Завинаги безплатно за ранните потребители.',role_placeholder:'Аз съм...',role_freelancer:'Фрийлансър',role_client:'Компания / Работодател',waitlist_btn:'Присъединете се',joining:'Присъединяване...',cta_note:'Без спам. Отписване с един клик. GDPR-съвместимо.',success_title:'Вие сте в списъка!',success_sub:'Ще ви уведомим преди стартирането. Проверете входящата си поща.'},
+      hr:{nav_how:'Kako funkcionira',nav_benefits:'Prednosti',nav_features:'Značajke',nav_pricing:'Cijene',nav_login:'Prijava',nav_waitlist:'Pridruži se listi čekanja',hero_badge:'Lansiranje Q3 2026',hero_h1a:'Pronađite pravi talent.',hero_h1b:'Brže. Sigurnije.',hero_sub:'Europsko GDPR-usklađeno tržište slobodnjaka — eskrou po fazama, lokalna EU plaćanja i verificirani talenti u 27 zemalja.',cta_find:'Pronađite slobodnjake',cta_become:'Postanite slobodnjak',how_label:'Kako funkcionira',how_title:'Od brifinga do isporuke u tri koraka',benefits_label:'Za koga',benefits_title:'Izgrađeno za obje strane tržišta',features_label:'Značajke platforme',features_title:'Sve što trebate, ništa suvišno',cta_title:'Budite prvi',cta_sub:'Registrirajte se rano i dobijte prioritetan pristup pri lansiranju. Besplatno zauvijek za rane korisnike.',role_placeholder:'Ja sam...',role_freelancer:'Slobodnjak',role_client:'Tvrtka / Poslodavac',waitlist_btn:'Pridruži se listi',joining:'Pridruživanje...',cta_note:'Bez neželjene pošte. Odjava jednim klikom. GDPR-usklađeno.',success_title:'Na listi ste!',success_sub:'Obavijestit ćemo vas prije lansiranja. Provjerite svoju pristiglu poštu.'},
+      el:{nav_how:'Πώς λειτουργεί',nav_benefits:'Πλεονεκτήματα',nav_features:'Χαρακτηριστικά',nav_pricing:'Τιμές',nav_login:'Σύνδεση',nav_waitlist:'Εγγραφή στη λίστα',hero_badge:'Εκκίνηση Q3 2026',hero_h1a:'Βρείτε το σωστό ταλέντο.',hero_h1b:'Γρηγορότερα. Ασφαλέστερα.',hero_sub:'Η ευρωπαϊκή αγορά ελεύθερων επαγγελματιών συμβατή με GDPR — εscrow ορόσημων, τοπικές πληρωμές ΕΕ και επαληθευμένα ταλέντα σε 27 χώρες.',cta_find:'Βρείτε ελεύθερους επαγγελματίες',cta_become:'Γίνετε ελεύθερος επαγγελματίας',how_label:'Πώς λειτουργεί',how_title:'Από την ανάθεση στην παράδοση σε τρία βήματα',benefits_label:'Για ποιους',benefits_title:'Φτιαγμένο και για τις δύο πλευρές της αγοράς',features_label:'Χαρακτηριστικά',features_title:'Όλα όσα χρειάζεστε, τίποτα περιττό',cta_title:'Γίνετε πρώτοι',cta_sub:'Εγγραφείτε νωρίς και αποκτήστε προτεραιότητα πρόσβασης κατά την εκκίνηση. Δωρεάν για πάντα για τους πρώτους χρήστες.',role_placeholder:'Είμαι...',role_freelancer:'Ελεύθερος επαγγελματίας',role_client:'Εταιρεία / Εργοδότης',waitlist_btn:'Εγγραφή στη λίστα',joining:'Εγγραφή...',cta_note:'Χωρίς spam. Διαγραφή με ένα κλικ. Συμβατό με GDPR.',success_title:'Είστε στη λίστα!',success_sub:'Θα σας ειδοποιήσουμε πριν την εκκίνηση. Ελέγξτε τα εισερχόμενά σας.'},
+      uk:{nav_how:'Як це працює',nav_benefits:'Переваги',nav_features:'Функції',nav_pricing:'Ціни',nav_login:'Увійти',nav_waitlist:'Долучитись до списку',hero_badge:'Запуск Q3 2026',hero_h1a:'Знайдіть правильний талант.',hero_h1b:'Швидше. Надійніше.',hero_sub:'Європейський GDPR-сумісний ринок фрілансерів — ескроу за етапами, місцеві платежі ЄС та перевірені таланти в 27 країнах.',cta_find:'Знайти фрілансерів',cta_become:'Стати фрілансером',how_label:'Як це працює',how_title:'Від брифу до доставки у три кроки',benefits_label:'Для кого',benefits_title:'Побудовано для обох сторін ринку',features_label:'Функції платформи',features_title:'Все що потрібно, нічого зайвого',cta_title:'Будьте першими',cta_sub:'Зареєструйтесь раніше і отримайте пріоритетний доступ при запуску. Завжди безкоштовно для ранніх користувачів.',role_placeholder:'Я...',role_freelancer:'Фрілансер',role_client:'Компанія / Роботодавець',waitlist_btn:'Долучитись до списку',joining:'Долучення...',cta_note:'Без спаму. Відписатись одним кліком. GDPR-сумісно.',success_title:'Ви у списку!',success_sub:'Ми повідомимо вас перед запуском. Перевірте свою поштову скриньку.'},
+      ru:{nav_how:'Как это работает',nav_benefits:'Преимущества',nav_features:'Функции',nav_pricing:'Цены',nav_login:'Войти',nav_waitlist:'Присоединиться к списку',hero_badge:'Запуск Q3 2026',hero_h1a:'Найдите нужный талант.',hero_h1b:'Быстрее. Безопаснее.',hero_sub:'Европейский GDPR-совместимый рынок фрилансеров — эскроу по этапам, местные платежи ЕС и проверенные таланты в 27 странах.',cta_find:'Найти фрилансеров',cta_become:'Стать фрилансером',how_label:'Как это работает',how_title:'От задания до доставки в три шага',benefits_label:'Для кого',benefits_title:'Создано для обеих сторон рынка',features_label:'Функции платформы',features_title:'Всё необходимое, ничего лишнего',cta_title:'Будьте первыми',cta_sub:'Зарегистрируйтесь заранее и получите приоритетный доступ при запуске. Всегда бесплатно для первых пользователей.',role_placeholder:'Я...',role_freelancer:'Фрилансер',role_client:'Компания / Работодатель',waitlist_btn:'Присоединиться к списку',joining:'Присоединение...',cta_note:'Без спама. Отписаться одним кликом. Соответствует GDPR.',success_title:'Вы в списке!',success_sub:'Мы уведомим вас перед запуском. Проверьте свой почтовый ящик.'},
+      lt:{nav_how:'Kaip tai veikia',nav_benefits:'Privalumai',nav_features:'Funkcijos',nav_pricing:'Kainos',nav_login:'Prisijungti',nav_waitlist:'Prisijungti prie sąrašo',hero_badge:'Paleidimas Q3 2026',hero_h1a:'Raskite tinkamą talentą.',hero_h1b:'Greičiau. Saugiau.',hero_sub:'Europinis BDAR atitinkantis laisvai samdomų darbuotojų turgus — etapų deponavimas, vietiniai ES mokėjimai ir patikrinti talentai 27 šalyse.',cta_find:'Rasti laisvai samdomų darbuotojų',cta_become:'Tapti laisvai samdomu darbuotoju',how_label:'Kaip tai veikia',how_title:'Nuo užduoties iki pristatymo trimis žingsniais',benefits_label:'Kam skirta',benefits_title:'Sukurta abiem rinkos pusėms',features_label:'Platformos funkcijos',features_title:'Viskas ko reikia, nieko per daug',cta_title:'Būkite pirmieji',cta_sub:'Užsiregistruokite anksti ir gaukite prioritetinę prieigą pradedant. Visada nemokama ankstyvaisiais naudotojais.',role_placeholder:'Aš esu...',role_freelancer:'Laisvai samdomas darbuotojas',role_client:'Įmonė / Darbdavys',waitlist_btn:'Prisijungti prie sąrašo',joining:'Prisijungiama...',cta_note:'Jokio šlamšto. Atsisakyti vienu paspaudimu. Atitinka BDAR.',success_title:'Esate sąraše!',success_sub:'Pranešime prieš paleidimą. Patikrinkite savo pašto dėžutę.'},
+      lv:{nav_how:'Kā tas darbojas',nav_benefits:'Priekšrocības',nav_features:'Funkcijas',nav_pricing:'Cenas',nav_login:'Pieteikties',nav_waitlist:'Pievienoties sarakstam',hero_badge:'Palaišana Q3 2026',hero_h1a:'Atrodiet pareizo talantu.',hero_h1b:'Ātrāk. Drošāk.',hero_sub:'Eiropas VDAR atbilstošs ārštata darbinieku tirgus — posmveida depozīts, vietējie ES maksājumi un pārbaudīti talanti 27 valstīs.',cta_find:'Atrast ārštata darbiniekus',cta_become:'Kļūt par ārštata darbinieku',how_label:'Kā tas darbojas',how_title:'No uzdevuma līdz piegādei trijos soļos',benefits_label:'Kam paredzēts',benefits_title:'Veidots abām tirgus pusēm',features_label:'Platformas funkcijas',features_title:'Viss nepieciešamais, nekas lieks',cta_title:'Esiet pirmie',cta_sub:'Reģistrējieties agri un iegūstiet prioritāru piekļuvi palaišanas brīdī. Vienmēr bezmaksas agrīnajiem lietotājiem.',role_placeholder:'Es esmu...',role_freelancer:'Ārštata darbinieks',role_client:'Uzņēmums / Darba devējs',waitlist_btn:'Pievienoties sarakstam',joining:'Pievienojas...',cta_note:'Bez surogātpasta. Atteikties ar vienu klikšķi. Atbilst VDAR.',success_title:'Jūs esat sarakstā!',success_sub:'Paziņosim pirms palaišanas. Pārbaudiet savu iesūtni.'},
+      et:{nav_how:'Kuidas see töötab',nav_benefits:'Eelised',nav_features:'Funktsioonid',nav_pricing:'Hinnad',nav_login:'Logi sisse',nav_waitlist:'Liitu ootelehega',hero_badge:'Käivitamine Q3 2026',hero_h1a:'Leia õige talent.',hero_h1b:'Kiiremini. Turvalisemalt.',hero_sub:'Euroopa GDPR-ühilduv vabakutseliste turg — verstapost-deponeering, kohalikud EL-i maksed ja kontrollitud talendid 27 riigis.',cta_find:'Leia vabakutselisi',cta_become:'Saa vabakutseliseks',how_label:'Kuidas see töötab',how_title:'Lähteülesandest tarneni kolme sammuga',benefits_label:'Kellele',benefits_title:'Ehitatud turu mõlemale poolele',features_label:'Platvormi funktsioonid',features_title:'Kõik vajalik, mitte midagi üleliigset',cta_title:'Ole esimene',cta_sub:'Registreeru varakult ja saa käivitamisel eelistatud juurdepääs. Alati tasuta varaste kasutajate jaoks.',role_placeholder:'Olen...',role_freelancer:'Vabakutseline',role_client:'Ettevõte / Tööandja',waitlist_btn:'Liitu ootelehega',joining:'Liitumine...',cta_note:'Rämpsposti pole. Tühista ühe klõpsuga. GDPR-ühilduv.',success_title:'Oled nimekirjas!',success_sub:'Teavitame sind enne käivitamist. Kontrolli oma postkasti.'},
+      sl:{nav_how:'Kako deluje',nav_benefits:'Prednosti',nav_features:'Funkcije',nav_pricing:'Cene',nav_login:'Prijava',nav_waitlist:'Pridruži se čakalni listi',hero_badge:'Lansiranje Q3 2026',hero_h1a:'Poiščite pravi talent.',hero_h1b:'Hitreje. Varneje.',hero_sub:'Evropski GDPR-skladen trg prostih delavcev — escrow mejnikov, lokalna plačila EU in preverjeni talenti v 27 državah.',cta_find:'Poiščite proste delavce',cta_become:'Postanite prosti delavec',how_label:'Kako deluje',how_title:'Od naročila do dostave v treh korakih',benefits_label:'Za koga',benefits_title:'Zgrajeno za obe strani trga',features_label:'Funkcije platforme',features_title:'Vse kar potrebujete, nič odveč',cta_title:'Bodite prvi',cta_sub:'Registrirajte se zgodaj in pridobite prednostni dostop ob lansiranju. Vedno brezplačno za zgodnje uporabnike.',role_placeholder:'Sem...',role_freelancer:'Prosti delavec',role_client:'Podjetje / Delodajalec',waitlist_btn:'Pridruži se čakalni listi',joining:'Pridruževanje...',cta_note:'Brez neželene pošte. Odjava z enim klikom. GDPR-skladno.',success_title:'Na listi ste!',success_sub:'Obvestili vas bomo pred lansiranjem. Preverite svojo pošto.'},
+      sr:{nav_how:'Kako funkcioniše',nav_benefits:'Prednosti',nav_features:'Funkcije',nav_pricing:'Cene',nav_login:'Prijava',nav_waitlist:'Pridruži se listi',hero_badge:'Lansiranje Q3 2026',hero_h1a:'Pronađite pravi talenat.',hero_h1b:'Brže. Sigurnije.',hero_sub:'Evropsko GDPR-usklađeno tržište slobodnjaka — eskrou po fazama, lokalna EU plaćanja i verifikovani talenti u 27 zemalja.',cta_find:'Pronađi slobodnjake',cta_become:'Postani slobodnjak',how_label:'Kako funkcioniše',how_title:'Od briefa do isporuke u tri koraka',benefits_label:'Za koga',benefits_title:'Izgrađeno za obe strane tržišta',features_label:'Funkcije platforme',features_title:'Sve što vam treba, ništa suvišno',cta_title:'Budite prvi',cta_sub:'Registrujte se rano i dobijte prioritetan pristup pri lansiranju. Besplatno zauvek za rane korisnike.',role_placeholder:'Ja sam...',role_freelancer:'Slobodnjak',role_client:'Kompanija / Poslodavac',waitlist_btn:'Pridruži se listi',joining:'Pridruživanje...',cta_note:'Bez neželjene pošte. Odjava jednim klikom. GDPR-usklađeno.',success_title:'Na listi ste!',success_sub:'Obavestićemo vas pre lansiranja. Proverite vašu poštu.'},
+      is:{nav_how:'Hvernig það virkar',nav_benefits:'Kostir',nav_features:'Eiginleikar',nav_pricing:'Verð',nav_login:'Innskráning',nav_waitlist:'Skrá sig á biðlista',hero_badge:'Kynning Q3 2026',hero_h1a:'Finndu réttu hæfileikana.',hero_h1b:'Hraðar. Öruggara.',hero_sub:'Evrópski GDPR-samhæfði sjálfstæðamarkaðurinn — áfangainnlausn, staðbundnar ESB-greiðslur og staðfestar hæfileikar í 27 löndum.',cta_find:'Finna sjálfstæða verktaka',cta_become:'Verða sjálfstæður verktaki',how_label:'Hvernig það virkar',how_title:'Frá verkefnislýsingu til afhendingar í þremur skrefum',benefits_label:'Fyrir hvern',benefits_title:'Byggt fyrir báðar hliðar markaðarins',features_label:'Eiginleikar kerfisins',features_title:'Allt sem þú þarft, ekkert umfram það',cta_title:'Vertu fyrstur',cta_sub:'Skráðu þig snemma og fáðu forgang við ræsingu. Alltaf ókeypis fyrir snemmbúna notendur.',role_placeholder:'Ég er...',role_freelancer:'Sjálfstæður verktaki',role_client:'Fyrirtæki / Vinnuveitandi',waitlist_btn:'Skrá sig á biðlista',joining:'Skrái...',cta_note:'Ekkert ruslpóstur. Afskráning með einum smelli. GDPR-samhæft.',success_title:'Þú ert á listanum!',success_sub:'Við látum þig vita fyrir ræsingu. Athugaðu pósthólfið þitt.'},
+      ga:{nav_how:'Conas a oibríonn sé',nav_benefits:'Buntáistí',nav_features:'Gnéithe',nav_pricing:'Praghsanna',nav_login:'Sínigh isteach',nav_waitlist:'Clárú ar an liosta feithimh',hero_badge:'Seoladh Q3 2026',hero_h1a:'Faigh an tallann ceart.',hero_h1b:'Níos tapúla. Níos sábháilte.',hero_sub:'Margadh saorthoilí Eorpach atá comhlíontach le GDPR — eascró cloch slí, íocaíochtaí áitiúla AE agus tallann fíoraithe i 27 tír.',cta_find:'Saorthoilaithe a aimsiú',cta_become:'Bí i do shaorthoilaí',how_label:'Conas a oibríonn sé',how_title:'Ó achoimre go seachadadh i dtrí chéim',benefits_label:'Cé dó',benefits_title:'Tógtha do dhá thaobh an mhargaidh',features_label:'Gnéithe an ardáin',features_title:'Gach a dteastaíonn uait, rud ar bith breise',cta_title:'Bí ar an gcéad duine',cta_sub:'Cláraigh go luath agus faigh rochtain tosaíochta ag seoladh. Saor in aisce go deo do luathúsáideoirí.',role_placeholder:'Is mise...',role_freelancer:'Saorthoilaí',role_client:'Cuideachta / Fostóir',waitlist_btn:'Clárú ar an liosta feithimh',joining:'Ag clárú...',cta_note:'Gan turscar. Dísínigh le cliceáil amháin. Comhlíontach le GDPR.',success_title:'Tá tú ar an liosta!',success_sub:'Cuirfimid in iúl duit roimh seoladh. Seiceáil do bhosca isteach.'},
+      mt:{nav_how:'Kif taħdem',nav_benefits:'Benefiċċji',nav_features:'Karatteristiċi',nav_pricing:'Prezzijiet',nav_login:'Idħol',nav_waitlist:'Ingħaqad mal-lista tal-istennija',hero_badge:'Tnedija Q3 2026',hero_h1a:'Sib it-talent it-tajjeb.',hero_h1b:'Aktar malajr. Aktar sigur.',hero_sub:"Is-suq tal-freelance Ewropew konformi mal-GDPR — escrow tal-milestone, pagamenti lokali tal-UE u talent verifikat f'27 pajjiż.",cta_find:'Sib freelancers',cta_become:'Issir freelancer',how_label:'Kif taħdem',how_title:'Mill-brief sal-kunsinna fi tliet passi',benefits_label:'Għal min',benefits_title:'Mibnija għaż-żewġ naħat tas-suq',features_label:'Karatteristiċi tal-pjattaforma',features_title:"Kulma teħtieġ, xejn żejjed",cta_title:'Kun l-ewwel',cta_sub:'Irreġistra kmieni u ġib aċċess prijoritarju meta nitnedew. Dejjem b\'xejn għall-utenti bikrija.',role_placeholder:'Jien...',role_freelancer:'Freelancer',role_client:'Kumpanija / Impjegatur',waitlist_btn:'Ingħaqad mal-lista',joining:'Qed tingħaqad...',cta_note:'L-ebda spam. Aħżen f\'klikk wieħed. Konformi mal-GDPR.',success_title:'Inti fuq il-lista!',success_sub:'Ninnotifikawk qabel it-tnedija. Iċċekkja l-inbox tiegħek.'},
+      lb:{nav_how:'Wéi et funktionéiert',nav_benefits:'Virdeeler',nav_features:'Funktiounen',nav_pricing:'Präisser',nav_login:'Aloggen',nav_waitlist:'Waardelist bäitrieden',hero_badge:'Start Q3 2026',hero_h1a:'Fannt de richtege Talent.',hero_h1b:'Méi séier. Méi sécher.',hero_sub:"Europas GDPR-konformt Freelance-Maartplaz — Milestone-Escrow, lokal EU-Bezuelungen a verifizéierte Talenter an 27 Länner.",cta_find:'Freelancer fannen',cta_become:'Freelancer ginn',how_label:'Wéi et funktionéiert',how_title:'Vum Brief bis zur Liwwerung an dräi Schrëtt',benefits_label:'Fir wen',benefits_title:'Fir béid Säite vum Maart gebaut',features_label:'Plattform-Funktiounen',features_title:'Alles wat dir braucht, näischt méi',cta_title:'Sidd déi éischt',cta_sub:'Mellt iech fréi u fir prioritär Zougang beim Start. Ëmmer gratis fir fréi Benotzer.',role_placeholder:'Ech sinn...',role_freelancer:'Freelancer',role_client:'Firma / Aarbeitgeber',waitlist_btn:'Waardelist bäitrieden',joining:'Bäitrieden...',cta_note:'Kee Spam. Ofmellen mat engem Klick. GDPR-konform.',success_title:'Dir sidd op der Lëscht!',success_sub:'Mir notifizéieren iech virum Start. Kontrolléiert är Inbox.'}
+    };
+
+    function applyLang(lang) {
+      const tr = T[lang] || T['en'];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = tr[key] !== undefined ? tr[key] : (T['en'][key] !== undefined ? T['en'][key] : null);
+        if (val !== null) el.textContent = val;
+      });
+      // Update waitlist btn if not disabled
+      const wBtn = document.getElementById('waitlist-btn');
+      if (wBtn && !wBtn.disabled) wBtn.textContent = tr.waitlist_btn || T['en'].waitlist_btn;
+      localStorage.setItem('eh_lang', lang);
+      const langObj = LANGS.find(l => l.c === lang) || LANGS[0];
+      document.getElementById('langFlag').textContent = langObj.f;
+      document.getElementById('langCode').textContent = lang.toUpperCase();
+      // Update active state in dropdown
+      document.querySelectorAll('.lang-option').forEach(o => {
+        o.classList.toggle('active', o.dataset.lang === lang);
+      });
+    }
+
+    // Build dropdown
+    const dropdown = document.getElementById('langDropdown');
+    LANGS.forEach(l => {
+      const opt = document.createElement('div');
+      opt.className = 'lang-option';
+      opt.dataset.lang = l.c;
+      opt.innerHTML = `<span class="lf">${l.f}</span><span>${l.n}</span><span class="lc">${l.c.toUpperCase()}</span>`;
+      opt.addEventListener('click', () => {
+        applyLang(l.c);
+        dropdown.classList.remove('open');
+      });
+      dropdown.appendChild(opt);
+    });
+
+    // Toggle dropdown
+    document.getElementById('langBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', () => dropdown.classList.remove('open'));
+    dropdown.addEventListener('click', e => e.stopPropagation());
+
+    // Init language from localStorage
+    const savedLang = localStorage.getItem('eh_lang') || 'en';
+    applyLang(savedLang);
+
+    // ── Theme toggle
+    const html = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('eh_theme');
+    if (saved) { html.dataset.theme = saved; toggle.textContent = saved === 'dark' ? '🌙' : '☀️'; }
+    else if (window.matchMedia('(prefers-color-scheme: light)').matches) { html.dataset.theme = 'light'; toggle.textContent = '☀️'; }
+
+    toggle.addEventListener('click', () => {
+      const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+      html.dataset.theme = next;
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+      localStorage.setItem('eh_theme', next);
+    });
+
+    // ── Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    // ── Waitlist handler
+    const API = 'https://eurohive-production.up.railway.app';
+    async function handleWaitlist(e) {
+      e.preventDefault();
+      const form = e.target;
+      const email = form.querySelector('input[name="email"]').value;
+      const btn = document.getElementById('waitlist-btn');
+      const origText = btn.textContent;
+      btn.textContent = T[localStorage.getItem('eh_lang') || 'en']?.joining || 'Joining...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/api/v1/waitlist`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, source: 'landing' }),
+        });
+        if (!res.ok) throw new Error('Server error');
+        form.style.display = 'none';
+        document.getElementById('cta-success').classList.add('show');
+      } catch {
+        btn.textContent = origText;
+        btn.disabled = false;
+        btn.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.4)';
+        setTimeout(() => btn.style.boxShadow = '', 2500);
+      }
+    }
+
+
+    // ── Legal modal
+    function openLegal(e, tab) {
+      e.preventDefault();
+      document.getElementById('legal-terms').style.display = 'none';
+      document.getElementById('legal-privacy').style.display = 'none';
+      document.getElementById('legal-cookies').style.display = 'none';
+      const el = document.getElementById('legal-' + tab);
+      if (el) el.style.display = 'block';
+      document.getElementById('legal-modal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLegal() {
+      document.getElementById('legal-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLegal(); });
+  </script>
+
+
+  <!-- ── LEGAL MODAL ─────────────────────────────── -->
+  <div id="legal-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);overflow-y:auto;padding:2rem 1rem;" onclick="if(event.target===this)closeLegal()">
+    <div style="max-width:780px;margin:2rem auto;background:var(--bg-elevated);border:1px solid var(--border);border-radius:20px;padding:2.5rem 3rem;position:relative;">
+      <button onclick="closeLegal()" style="position:absolute;top:1.25rem;right:1.25rem;background:var(--border);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--text);font-size:1.1rem;display:flex;align-items:center;justify-content:center;">&times;</button>
+      <div id="legal-terms" style="display:none;">
+        <h2 style="font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;">Terms of Service</h2>
+        <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:2rem;">Last updated: April 2026 &mdash; Effective for all users of eurohive.eu</p>
+        <div style="color:var(--text-secondary);font-size:0.9rem;line-height:1.75;">
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">1. Company Information</h3>
+          <p>Eurohive is operated by Eurohive, a company registered in Denmark with CVR number 34808090. Registered address: Denmark. Contact: <a href="mailto:hello@eurohive.eu" style="color:var(--gold);">hello@eurohive.eu</a>.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">2. Platform Overview</h3>
+          <p>Eurohive is a freelance marketplace connecting clients (&ldquo;Clients&rdquo;) with independent freelancers (&ldquo;Freelancers&rdquo;) across the European Union. Eurohive acts solely as an intermediary; it is not a party to any contract between Clients and Freelancers.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">3. Account Registration &amp; Eligibility</h3>
+          <p>You must be at least 18 years old and legally able to enter contracts in your country. You agree to provide accurate information during registration. Eurohive reserves the right to suspend or terminate accounts that violate these Terms.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">4. HoneyDrops (HD) &mdash; Platform Credits</h3>
+          <p>HoneyDrops (HD) are internal platform credits used by Freelancers to place bids on jobs and promote their services. HD are not currency, have no monetary value outside the platform, and are non-refundable. HD are purchased via Stripe. HD balances may expire if an account is inactive for 12 months.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">5. Jobs, Bids &amp; Contracts</h3>
+          <p>Clients post jobs describing scope, timeline, and budget. Freelancers submit bids (spending HD) with a cover letter and proposed EUR amount. A contract is formed when a Client accepts a bid. Clients must fund the EUR escrow before accepting any bid. Eurohive&rsquo;s milestone-based contract system allows Clients to release payment per agreed milestone.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">6. Payments &amp; EUR Escrow</h3>
+          <p>All payments are processed via <strong>Stripe</strong> in EUR. When a Client accepts a bid, the agreed contract amount is held in escrow. Funds are released to the Freelancer upon Client approval of each milestone. Eurohive charges a <strong>10% platform fee</strong> on the gross contract value, deducted from the escrow at payout. VAT may apply based on your jurisdiction. Payouts are made directly to the Freelancer&rsquo;s verified bank account via Stripe Connect.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">7. Cancellation &amp; Refunds</h3>
+          <p>If a job is cancelled before work begins, the Client may request a refund of the escrowed amount (minus any Stripe processing fees). HD spent on bids are non-refundable. Disputes between Clients and Freelancers are handled via Eurohive&rsquo;s dispute resolution process.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">8. Platform Communications</h3>
+          <p>All communication between Clients and Freelancers must take place within the Eurohive messaging system. Sharing contact information (email, phone, social media) to bypass the platform is prohibited and may result in account suspension.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">9. KYC &amp; Identity Verification</h3>
+          <p>Freelancers are required to complete identity verification (KYC) before withdrawing earnings. Eurohive uses third-party KYC providers compliant with EU AML directives. Incomplete KYC may restrict account features.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">10. GDPR &amp; Data Protection</h3>
+          <p>Eurohive processes personal data in accordance with the EU General Data Protection Regulation (GDPR). Data is stored on EU infrastructure. You have the right to access, rectify, and erase your data. For data requests, contact <a href="mailto:hello@eurohive.eu" style="color:var(--gold);">hello@eurohive.eu</a>.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">11. Prohibited Conduct</h3>
+          <p>You may not: use the platform for illegal purposes; submit false information; engage in fraudulent transactions; attempt to reverse-engineer the platform; or interfere with other users&rsquo; accounts.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">12. Limitation of Liability</h3>
+          <p>To the maximum extent permitted by Danish law, Eurohive&rsquo;s liability is limited to fees paid in the 3 months preceding the claim. Eurohive is not liable for disputes between Clients and Freelancers, lost profits, or indirect damages.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">13. Governing Law</h3>
+          <p>These Terms are governed by the laws of Denmark. Disputes are subject to the exclusive jurisdiction of Danish courts.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">14. Changes to Terms</h3>
+          <p>Eurohive reserves the right to update these Terms at any time. Continued use of the platform after notification constitutes acceptance of the updated Terms.</p>
+        </div>
+      </div>
+      <div id="legal-privacy" style="display:none;">
+        <h2 style="font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;">Privacy Policy</h2>
+        <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:2rem;">Last updated: April 2026</p>
+        <div style="color:var(--text-secondary);font-size:0.9rem;line-height:1.75;">
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">Data Controller</h3>
+          <p>Eurohive, registered in Denmark, CVR 34808090. Contact: <a href="mailto:hello@eurohive.eu" style="color:var(--gold);">hello@eurohive.eu</a></p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">Data We Collect</h3>
+          <p>Account data (name, email, role), payment data (processed by Stripe &mdash; we do not store card details), KYC documents, job/bid/message content, and usage analytics.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">How We Use Your Data</h3>
+          <p>To provide and improve the platform, process payments, verify identity, send transactional emails, comply with legal obligations, and prevent fraud.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">Your Rights (GDPR)</h3>
+          <p>Right to access, rectify, erase, restrict processing, data portability, and object to processing. Submit requests to <a href="mailto:hello@eurohive.eu" style="color:var(--gold);">hello@eurohive.eu</a>. You may also lodge a complaint with your national supervisory authority.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">Data Retention</h3>
+          <p>Account data: retained for the duration of your account plus 2 years. Financial records: 5 years (legal requirement). You may request erasure of non-essential data at any time.</p>
+          <h3 style="color:var(--text);margin:1.5rem 0 0.5rem;font-size:1.05rem;">Third Parties</h3>
+          <p>Stripe (payments, KYC), Resend (transactional email), Railway (infrastructure &mdash; EU region). No data is sold to third parties.</p>
+        </div>
+      </div>
+      <div id="legal-cookies" style="display:none;">
+        <h2 style="font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;">Cookie Policy</h2>
+        <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:2rem;">Last updated: April 2026</p>
+        <div style="color:var(--text-secondary);font-size:0.9rem;line-height:1.75;">
+          <p>Eurohive uses minimal cookies strictly necessary to operate the platform:</p>
+          <ul style="margin:1rem 0 1rem 1.5rem;display:flex;flex-direction:column;gap:0.5rem;">
+            <li><strong style="color:var(--text);">Session authentication</strong> &mdash; keeps you logged in securely (HttpOnly, Secure, SameSite)</li>
+            <li><strong style="color:var(--text);">Language preference</strong> &mdash; localStorage, no tracking</li>
+            <li><strong style="color:var(--text);">Theme preference</strong> &mdash; localStorage, no tracking</li>
+          </ul>
+          <p>We do <strong>not</strong> use advertising cookies, third-party trackers, or analytics that identify individuals. Stripe may set cookies on payment pages in accordance with their own privacy policy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
