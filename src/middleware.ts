@@ -22,7 +22,7 @@ const PROTECTED_PATHS = [
 ];
 
 // Routes that authenticated users should be redirected away from
-const AUTH_PATHS = ["/login", "/register", "/forgot-password"];
+const AUTH_PATHS = ["/login", "/register", "/forgot-password", "/index.html"];
 
 // Routes that require admin role
 const ADMIN_PATHS = ["/admin"];
@@ -38,6 +38,11 @@ export default auth((req) => {
   );
   const isAuthPath = AUTH_PATHS.some((p) => pathname.startsWith(p));
   const isAdminPath = ADMIN_PATHS.some((p) => pathname.startsWith(p));
+
+  // Redirect authenticated users from root to dashboard
+  if ((pathname === "/" || pathname === "/index.html") && isAuthenticated) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
   // Redirect unauthenticated users to login
   if (isProtectedPath && !isAuthenticated) {

@@ -1,14 +1,7 @@
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
 
-export default async function HomePage() {
-  const session = await auth();
-
-  if (session) {
-    redirect("/dashboard");
-  }
-
-  // If not logged in, show the static landing page
-  // The landing page is served from public/index.html
+// Middleware handles redirecting authenticated users to /dashboard.
+// Unauthenticated visitors land here and are sent to the static landing page.
+export default function HomePage() {
   redirect("/index.html");
 }
