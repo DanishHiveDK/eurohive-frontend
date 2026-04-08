@@ -9,7 +9,7 @@ const updateSchema = z.object({
   category: z.string().max(50).optional(),
   budgetMin: z.number().min(50).optional(),
   budgetMax: z.number().min(50).optional(),
-  requiredSkills: z.array(z.string().max(50)).max(15).optional(),
+  skillsRequired: z.array(z.string().max(50)).max(15).optional(),
   deadline: z.string().datetime().optional().nullable(),
   visibility: z.enum(["public", "invite_only"]).optional(),
   status: z.enum(["open", "cancelled"]).optional(),
