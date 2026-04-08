@@ -37,11 +37,11 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         },
       },
       milestones: {
-        orderBy: { orderIndex: "asc" },
+        orderBy: { position: "asc" },
         select: {
           id: true, title: true, description: true,
           amount: true, status: true, dueDate: true,
-          orderIndex: true, molliePaymentId: true,
+          position: true, molliePaymentId: true,
           fundedAt: true, submittedAt: true, approvedAt: true,
         },
       },

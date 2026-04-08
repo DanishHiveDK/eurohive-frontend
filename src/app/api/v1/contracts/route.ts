@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
         },
         milestones: {
           select: { id: true, title: true, amount: true, status: true, dueDate: true },
-          orderBy: { orderIndex: "asc" },
+          orderBy: { position: "asc" },
         },
         _count: { select: { milestones: true } },
       },
