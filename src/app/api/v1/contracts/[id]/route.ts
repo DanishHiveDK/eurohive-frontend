@@ -95,7 +95,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
           : 0,
         fundedAmount,
         releasedAmount,
-        totalAmount: Number(contract.totalAmount),
+        totalAmount: Number(contract.agreedPrice),
       },
     },
   });
