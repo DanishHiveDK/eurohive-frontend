@@ -40,7 +40,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         select: {
           id: true,
           status: true,
-          amount: true,
+          proposedPrice: true,
           estimatedDays: true,
           createdAt: true,
           freelancer: {
