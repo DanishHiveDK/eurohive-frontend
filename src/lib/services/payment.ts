@@ -117,7 +117,7 @@ export async function fundMilestone(
     paymentId: payment.id,
     checkoutUrl: payment.getCheckoutUrl() || "",
     amount,
-    method: payment.method,
+    method: payment.method ?? null,
   };
 }
 

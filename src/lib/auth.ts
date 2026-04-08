@@ -38,7 +38,7 @@ declare module "next-auth" {
   }
 }
 
-declare module "next-auth/jwt" {
+declare module "next-auth" {
   interface JWT {
     id: string;
     role: UserRole;
@@ -160,10 +160,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // ── Session: expose data to client ────────────────────────
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-        session.user.status = token.status;
-        session.user.kycVerified = token.kycVerified;
+        session.user.id = token.id as string;
+        session.user.role = token.role as UserRole;
+        session.user.status = token.status as string;
+        session.user.kycVerified = token.kycVerified as boolean;
       }
       return session;
     },
